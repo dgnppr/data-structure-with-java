@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="linkedlist.single.LinkedListTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2023-05-18T00:51:46" hostname="174-222-190-190.cab.prima.net.ar" time="0.007">
+  <properties/>
+  <testcase name="맨 앞 + 맨 뒤 혼합 노드 삭제" classname="linkedlist.single.LinkedListTest" time="0.0"/>
+  <testcase name="맨 앞에 노드 추가" classname="linkedlist.single.LinkedListTest" time="0.0"/>
+  <testcase name="맨 뒤에 노드 추가" classname="linkedlist.single.LinkedListTest" time="0.0"/>
+  <testcase name="검색" classname="linkedlist.single.LinkedListTest" time="0.0"/>
+  <testcase name="맨 앞 + 맨 뒤 혼합 노드 추가" classname="linkedlist.single.LinkedListTest" time="0.0"/>
+  <testcase name="맨 앞 노드 삭제" classname="linkedlist.single.LinkedListTest" time="0.0"/>
+  <testcase name="헤드노드에서 n번쨰 뒤에 있는 노드의 데이터 반환" classname="linkedlist.single.LinkedListTest" time="0.0"/>
+  <testcase name="모든 노드 삭제" classname="linkedlist.single.LinkedListTest" time="0.0"/>
+  <testcase name="같은 데이터 중 맨 앞 노드만 남기고 나머지 삭제" classname="linkedlist.single.LinkedListTest" time="0.002"/>
+  <testcase name="맨 뒤 노드 삭제" classname="linkedlist.single.LinkedListTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

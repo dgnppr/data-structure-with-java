@@ -7,13 +7,13 @@ import org.junit.jupiter.api.Test;
 import java.util.Comparator;
 import java.util.List;
 
-class LinkedListTest {
+class SingleLinkedListTest {
 
-    LinkedList<Integer> linkedList = new LinkedList<>();
+    SingleLinkedList<Integer> linkedList = new SingleLinkedList<>();
     Comparator<Integer> comparator = new Comparator<>() {
         @Override
         public int compare(Integer o1, Integer o2) {
-            return o1 - o2;
+            return o1.compareTo(o2);
         }
     };
 
@@ -28,7 +28,7 @@ class LinkedListTest {
 
         List<Integer> allNodeData = linkedList.getAllNodeData();
 
-        Assertions.assertThat(allNodeData.size()).isEqualTo(5);
+        Assertions.assertThat(allNodeData).hasSize(5);
 
         for (int i = 0; i < 5; i++) {
             Assertions.assertThat(allNodeData.get(i)).isEqualTo(i + 1);
@@ -45,7 +45,7 @@ class LinkedListTest {
 
         List<Integer> allNodeData = linkedList.getAllNodeData();
 
-        Assertions.assertThat(allNodeData.size()).isEqualTo(5);
+        Assertions.assertThat(allNodeData).hasSize(5);
 
         for (int i = 0; i < 5; i++) {
             Assertions.assertThat(allNodeData.get(i)).isEqualTo(5 - i);
@@ -64,7 +64,8 @@ class LinkedListTest {
 
         List<Integer> allNodeData = linkedList.getAllNodeData();
 
-        Assertions.assertThat(allNodeData.size()).isEqualTo(5);
+        Assertions.assertThat(allNodeData).hasSize(5);
+        Assertions.assertThat(linkedList.getSize()).isEqualTo(5);
 
         for (int i = 0; i < 5; i++) {
             Assertions.assertThat(allNodeData.get(i)).isEqualTo(i + 1);
@@ -80,6 +81,7 @@ class LinkedListTest {
 
         List<Integer> allNodeData = linkedList.getAllNodeData();
 
+        Assertions.assertThat(linkedList.getSize()).isZero();
         Assertions.assertThat(allNodeData).isNull();
     }
 
@@ -92,6 +94,7 @@ class LinkedListTest {
 
         List<Integer> allNodeData = linkedList.getAllNodeData();
 
+        Assertions.assertThat(linkedList.getSize()).isZero();
         Assertions.assertThat(allNodeData).isNull();
     }
 
@@ -111,13 +114,14 @@ class LinkedListTest {
 
         List<Integer> allNodeData = linkedList.getAllNodeData();
 
-        Assertions.assertThat(allNodeData.size()).isEqualTo(2);
+        Assertions.assertThat(linkedList.getSize()).isEqualTo(2);
+        Assertions.assertThat(allNodeData).hasSize(2);
         Assertions.assertThat(allNodeData.get(0)).isEqualTo(2);
         Assertions.assertThat(allNodeData.get(1)).isEqualTo(3);
     }
 
     @Test
-    @DisplayName("모든 노드 삭제")
+    @DisplayName("clear test")
     void clear() throws Exception {
 
         linkedList.addLast(1);
@@ -129,27 +133,62 @@ class LinkedListTest {
         linkedList.clear();
 
         List<Integer> allNodeData = linkedList.getAllNodeData();
+        Assertions.assertThat(linkedList.getSize()).isZero();
 
         Assertions.assertThat(allNodeData).isNull();
-
     }
 
+
     @Test
-    @DisplayName("검색")
+    @DisplayName("deduplicate test")
+    void deduplicate() throws Exception {
+        linkedList.addLast(1);
+        linkedList.addLast(1);
+        linkedList.addLast(1);
+        linkedList.addLast(4);
+        linkedList.addLast(2);
+        linkedList.addLast(2);
+        linkedList.addLast(2);
+        linkedList.addLast(3);
+        linkedList.addLast(3);
+        linkedList.addLast(3);
+        linkedList.addLast(3);
+        linkedList.addLast(3);
+        linkedList.addLast(4);
+
+        List<Integer> beforeDeduplicate = linkedList.getAllNodeData();
+        Assertions.assertThat(beforeDeduplicate.stream().filter(i -> i == 1).count()).isEqualTo(3);
+        Assertions.assertThat(beforeDeduplicate.stream().filter(i -> i == 2).count()).isEqualTo(3);
+        Assertions.assertThat(beforeDeduplicate.stream().filter(i -> i == 3).count()).isEqualTo(5);
+        Assertions.assertThat(beforeDeduplicate.stream().filter(i -> i == 4).count()).isEqualTo(2);
+        Assertions.assertThat(linkedList.getSize()).isEqualTo(13);
+
+        linkedList.deduplicate();
+
+        List<Integer> afterDeduplicate = linkedList.getAllNodeData();
+        Assertions.assertThat(afterDeduplicate.stream().filter(i -> i == 1).count()).isEqualTo(1);
+        Assertions.assertThat(afterDeduplicate.stream().filter(i -> i == 2).count()).isEqualTo(1);
+        Assertions.assertThat(afterDeduplicate.stream().filter(i -> i == 3).count()).isEqualTo(1);
+        Assertions.assertThat(afterDeduplicate.stream().filter(i -> i == 4).count()).isEqualTo(1);
+        Assertions.assertThat(linkedList.getSize()).isEqualTo(4);
+    }
+
+
+    @Test
+    @DisplayName("search test")
     void search() throws Exception {
         linkedList.addLast(1);
-
         Assertions.assertThat(linkedList.search(1, comparator)).isNotNull();
         Assertions.assertThat(linkedList.search(2, comparator)).isNull();
-
     }
 
     @Test
-    @DisplayName("같은 데이터 중 맨 앞 노드만 남기고 나머지 삭제")
+    @DisplayName("purge test")
     void purge() throws Exception {
         linkedList.addLast(1);
         linkedList.addLast(1);
         linkedList.addLast(1);
+        linkedList.addLast(4);
         linkedList.addLast(2);
         linkedList.addLast(2);
         linkedList.addLast(2);
@@ -158,6 +197,7 @@ class LinkedListTest {
         linkedList.addLast(3);
         linkedList.addLast(3);
         linkedList.addLast(3);
+        linkedList.addLast(4);
 
         Assertions.assertThat(linkedList.getAllNodeData().stream().filter(i -> i == 1).count()).isEqualTo(3);
         linkedList.purge(1, comparator);
@@ -171,20 +211,58 @@ class LinkedListTest {
         linkedList.purge(3, comparator);
         Assertions.assertThat(linkedList.getAllNodeData().stream().filter(i -> i == 3).count()).isEqualTo(1);
 
+        Assertions.assertThat(linkedList.getAllNodeData().stream().filter(i -> i == 4).count()).isEqualTo(2);
+        linkedList.purge(4, comparator);
+        Assertions.assertThat(linkedList.getAllNodeData().stream().filter(i -> i == 4).count()).isEqualTo(1);
+
+        Assertions.assertThat(linkedList.getSize()).isEqualTo(4);
+
     }
 
     @Test
-    @DisplayName("헤드노드에서 n번쨰 뒤에 있는 노드의 데이터 반환")
-    void retrieve() throws Exception {
+    @DisplayName("getDataFromFront test")
+    void getDataFromFrontTest() throws Exception {
         linkedList.addLast(1);
         linkedList.addLast(2);
         linkedList.addLast(3);
         linkedList.addLast(4);
         linkedList.addLast(5);
 
-        Assertions.assertThat(linkedList.retrieve(3)).isEqualTo(4);
-        Assertions.assertThat(linkedList.retrieve(-1)).isNull();
-        Assertions.assertThat(linkedList.retrieve(50)).isNull();
+        Assertions.assertThat(linkedList.getDataFromFront(3)).isEqualTo(4);
+        Assertions.assertThat(linkedList.getDataFromFront(-1)).isNull();
+        Assertions.assertThat(linkedList.getDataFromFront(50)).isNull();
     }
 
+    @Test
+    @DisplayName("getDataFromBack test")
+    void getDataFromBackTest() throws Exception {
+        linkedList.addLast(1);
+        linkedList.addLast(2);
+        linkedList.addLast(3);
+        linkedList.addLast(4);
+        linkedList.addLast(5);
+
+        Assertions.assertThat(linkedList.getDataFromBack(1)).isEqualTo(4);
+        Assertions.assertThat(linkedList.getDataFromBack(2)).isEqualTo(3);
+        Assertions.assertThat(linkedList.getDataFromBack(-1)).isNull();
+        Assertions.assertThat(linkedList.getDataFromBack(50)).isNull();
+    }
+
+    @Test
+    @DisplayName("getMiddleNodeData test")
+    void getMiddleNodeDataTest() throws Exception {
+        linkedList.addLast(1);
+        linkedList.addLast(2);
+        linkedList.addLast(3);
+        linkedList.addLast(4);
+        linkedList.addLast(5);
+        Assertions.assertThat(linkedList.getMiddleNodeData()).isEqualTo(3);
+
+        linkedList.addLast(6);
+        Assertions.assertThat(linkedList.getMiddleNodeData()).isEqualTo(4);
+
+        linkedList.addLast(7);
+        Assertions.assertThat(linkedList.getMiddleNodeData()).isEqualTo(4);
+
+    }
 }

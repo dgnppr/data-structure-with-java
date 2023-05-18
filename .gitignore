@@ -3,9 +3,9 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 
-./build
-./.gradle
-./.idea
+build
+.gradle
+.idea
 
 # User-specific stuff
 .idea/**/workspace.xml

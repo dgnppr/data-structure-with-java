@@ -39,6 +39,12 @@ public class SingleLinkedList<E> {
         size++;
     }
 
+    public void addNodeAtFirst(Node<E> node) {
+        node.nxt = head;
+        head = node;
+        size++;
+    }
+
     /**
      * 꼬리 노드 추가
      *
@@ -55,6 +61,22 @@ public class SingleLinkedList<E> {
             ptr.nxt = new Node<>(data, null);
             size++;
         }
+    }
+
+    public void addNodeAtLast(Node<E> node) {
+        if (isEmpty()) {
+            addNodeAtFirst(node);
+            return;
+        }
+
+        Node<E> ptr = this.head;
+
+        while (ptr.nxt != null) {
+            ptr = ptr.nxt;
+        }
+
+        ptr.nxt = node;
+        size++;
     }
 
     /**
@@ -133,6 +155,100 @@ public class SingleLinkedList<E> {
         return result;
     }
 
+    /**
+     * 연결 리스트 뒤집어서 반환
+     *
+     * @return 데이터 List
+     */
+    public SingleLinkedList<E> getReverseLinkedList() {
+        if (isEmpty()) return null;
+
+        Node<E> ptr = head;
+        SingleLinkedList<E> ret = new SingleLinkedList<>();
+
+        while (ptr != null) {
+            ret.addFirst(ptr.data);
+            ptr = ptr.nxt;
+        }
+
+        return ret;
+    }
+
+    /**
+     * 정수형 연결 리스트의 합
+     *
+     * @param list2: 정수형 연결 리스트
+     * @return
+     */
+    public SingleLinkedList<Integer> sumOfIntegerLinkedList(SingleLinkedList<Integer> list2) {
+        if (this.isEmpty() && list2.isEmpty()) return null;
+        else if (this.isEmpty() || list2.isEmpty()) return this.isEmpty() ? list2 : (SingleLinkedList<Integer>) this;
+
+        Node<Integer> ptr1 = (Node<Integer>) this.head;
+        Node<Integer> ptr2 = list2.head;
+        SingleLinkedList<Integer> ret = new SingleLinkedList<>();
+
+        int extra = 0;
+        while (ptr1 != null && ptr2 != null) {
+            int sum = ptr1.data + ptr2.data + extra;
+
+            if (sum < 10) extra = 0;
+            else extra = 1;
+
+            ret.addFirst(sum % 10);
+
+            ptr1 = ptr1.nxt;
+            ptr2 = ptr2.nxt;
+        }
+
+        while (ptr1 != null) {
+            int sum = ptr1.data + extra;
+
+            if (sum < 10) extra = 0;
+            else extra = 1;
+
+            ret.addFirst(sum % 10);
+            ptr1 = ptr1.nxt;
+        }
+
+        while (ptr2 != null) {
+            int sum = ptr2.data + extra;
+
+            if (sum < 10) extra = 0;
+            else extra = 1;
+
+            ret.addFirst(sum % 10);
+            ptr2 = ptr2.nxt;
+        }
+
+        if (extra > 0) {
+            ret.addFirst(extra);
+        }
+
+        return ret.getReverseLinkedList();
+    }
+
+    /**
+     * 회문 테스트
+     *
+     * @param c: comparator
+     * @return 회문이면 true 아니면 false
+     */
+    public boolean isPalindromeLinkedList(Comparator<? super E> c) {
+
+        if (isEmpty()) return false;
+
+        Node<E> ptr = this.head;
+        Node<E> reversedPtr = this.getReverseLinkedList().head;
+
+        while (ptr != reversedPtr) {
+            if (c.compare(ptr.data, reversedPtr.data) != 0) return false;
+            ptr = ptr.nxt;
+            reversedPtr = reversedPtr.nxt;
+        }
+
+        return true;
+    }
 
     /**
      * 같은 데이터 중 맨 앞 노드만 남기고 나머지 삭제
@@ -165,7 +281,7 @@ public class SingleLinkedList<E> {
      * @param k: 인덱스
      * @return 헤드 노드에서 idx 뒤에 위치한 노드의 데이터
      */
-    public E getDataFromFront(int k) {
+    public E getAt(int k) {
         if (isEmpty() || k > size) return null;
 
         Node<E> ptr = head;
@@ -183,12 +299,12 @@ public class SingleLinkedList<E> {
     }
 
     /**
-     * 뒤에서 k번쨰 원소 데이터 조회
+     * 뒤에서 k번째 원소 데이터 조회
      *
      * @param k: 인덱스
      * @return 헤드 노드에서 idx 뒤에 위치한 노드의 데이터
      */
-    public E getDataFromBack(int k) {
+    public E getAtFromBack(int k) {
         if (isEmpty() || k > size || k < 0) return null;
 
         k = (size - k - 1);
@@ -212,11 +328,39 @@ public class SingleLinkedList<E> {
      * @return 중간 위치 노드 데이터
      */
     public E getMiddleNodeData() {
-        return getDataFromFront(size / 2);
+        return getAt(size / 2);
     }
 
     /**
-     * 연결 리스트 중복 없애기
+     * 교집합 노드 조회
+     *
+     * @param other 비교 연결 리스트
+     * @return 교집합 노드 Set
+     */
+    public Set<Node<E>> getIntersectionNodeSet(SingleLinkedList<E> other) {
+        if (this.isEmpty() || other.isEmpty()) return null;
+
+        Set<Node<E>> nodeSet = new HashSet<>();
+        Set<Node<E>> result = new HashSet<>();
+
+        Node<E> ptr = this.head;
+
+        while (ptr != null) {
+            nodeSet.add(ptr);
+            ptr = ptr.nxt;
+        }
+
+        Node<E> otherPtr = other.head;
+        while (otherPtr != null) {
+            if (nodeSet.contains(otherPtr)) result.add(otherPtr);
+            otherPtr = otherPtr.nxt;
+        }
+
+        return result;
+    }
+
+    /**
+     * 중복 없애기
      */
     public void deduplicate() {
         if (isEmpty()) return;
@@ -232,6 +376,24 @@ public class SingleLinkedList<E> {
             }
             ptr = ptr.nxt;
         }
+    }
+
+    /**
+     * 연결 리스트 처음부터 모든 노드의 데이터 출력
+     */
+    public void print() {
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        Node<E> ptr = head;
+        while (ptr != null) {
+            sb.append(ptr.data + " ");
+            ptr = ptr.nxt;
+        }
+        System.out.println(sb);
     }
 
     public void clear() {
@@ -259,8 +421,17 @@ public class SingleLinkedList<E> {
         protected final E data;
         protected Node<E> nxt;
 
-        public Node(E data, Node<E> nxt) {
+        protected Node(E data, Node<E> nxt) {
             this.data = data;
+            this.nxt = nxt;
+        }
+
+        public Node(E data) {
+            this.data = data;
+            this.nxt = null;
+        }
+
+        public void setNxt(Node<E> nxt) {
             this.nxt = nxt;
         }
     }

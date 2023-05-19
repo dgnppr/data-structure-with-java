@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 class SingleLinkedListTest {
 
@@ -36,11 +37,46 @@ class SingleLinkedListTest {
     }
 
     @Test
+    @DisplayName("맨 앞에 노드 추가")
+    void addNodeAtFirst() throws Exception {
+        linkedList.addLast(1);
+        linkedList.addNodeAtLast(new SingleLinkedList.Node<Integer>(2));
+        linkedList.addNodeAtLast(new SingleLinkedList.Node<Integer>(3));
+        linkedList.addNodeAtLast(new SingleLinkedList.Node<Integer>(4));
+        linkedList.addNodeAtLast(new SingleLinkedList.Node<Integer>(5));
+
+        List<Integer> allNodeData = linkedList.getAllNodeData();
+
+        Assertions.assertThat(allNodeData).hasSize(5);
+
+        for (int i = 0; i < 5; i++) {
+            Assertions.assertThat(allNodeData.get(i)).isEqualTo(i + 1);
+        }
+    }
+
+    @Test
     @DisplayName("맨 뒤에 노드 추가")
     void addLast() throws Exception {
 
         for (int i = 0; i < 5; i++) {
             linkedList.addLast(5 - i);
+        }
+
+        List<Integer> allNodeData = linkedList.getAllNodeData();
+
+        Assertions.assertThat(allNodeData).hasSize(5);
+
+        for (int i = 0; i < 5; i++) {
+            Assertions.assertThat(allNodeData.get(i)).isEqualTo(5 - i);
+        }
+    }
+
+    @Test
+    @DisplayName("맨 뒤에 노드 추가")
+    void addNodeAtLast() throws Exception {
+
+        for (int i = 0; i < 5; i++) {
+            linkedList.addNodeAtLast(new SingleLinkedList.Node<>(5 - i));
         }
 
         List<Integer> allNodeData = linkedList.getAllNodeData();
@@ -216,7 +252,99 @@ class SingleLinkedListTest {
         Assertions.assertThat(linkedList.getAllNodeData().stream().filter(i -> i == 4).count()).isEqualTo(1);
 
         Assertions.assertThat(linkedList.getSize()).isEqualTo(4);
+    }
 
+    @Test
+    @DisplayName("뒤집은 연결 리스트 조회")
+    void getAllNodeDataFromBack() {
+        linkedList.addLast(1);
+        linkedList.addLast(2);
+        linkedList.addLast(3);
+        linkedList.addLast(4);
+        linkedList.addLast(5);
+
+        SingleLinkedList<Integer> reverseLinkedList = linkedList.getReverseLinkedList();
+        List<Integer> allNodeData = reverseLinkedList.getAllNodeData();
+        for (int i = 0; i < 5; i++) {
+            Assertions.assertThat(allNodeData.get(i)).isEqualTo(5 - i);
+        }
+        reverseLinkedList.print();
+    }
+
+    @Test
+    @DisplayName("연결 리스트 합 구하기")
+    void sumOfListTest() throws Exception {
+        SingleLinkedList<Integer> ll1 = new SingleLinkedList<>();
+        SingleLinkedList<Integer> ll2 = new SingleLinkedList<>();
+
+        linkedList.addLast(8);
+        linkedList.addLast(8);
+        linkedList.addLast(8);
+
+        ll1.addLast(9);
+        ll1.addLast(9);
+        ll1.addLast(9);
+        ll1.addLast(9);
+
+        SingleLinkedList<Integer> result1 = linkedList.sumOfIntegerLinkedList(ll1);
+        result1.print();
+
+        SingleLinkedList<Integer> result2 = linkedList.sumOfIntegerLinkedList(ll2);
+        result2.print();
+    }
+
+
+    @Test
+    @DisplayName("회문 X 테스트")
+    void invalidPalindromeTest() throws Exception {
+        linkedList.addLast(1);
+        linkedList.addLast(2);
+        linkedList.addLast(3);
+        Assertions.assertThat(linkedList.isPalindromeLinkedList(Comparator.naturalOrder())).isFalse();
+    }
+
+    @Test
+    @DisplayName("교집합 테스트")
+    void intersectionTest() throws Exception {
+
+        SingleLinkedList<Integer> list1 = new SingleLinkedList<>();
+
+        for (int i = 0; i < 5; i++) {
+            linkedList.addNodeAtLast(new SingleLinkedList.Node<>(5 - i));
+        }
+
+        for (int i = 0; i < 5; i++) {
+            list1.addNodeAtLast(new SingleLinkedList.Node<>(5 - i));
+        }
+
+        Assertions.assertThat(linkedList.getIntersectionNodeSet(list1)).hasSize(0);
+
+        SingleLinkedList.Node<Integer> node1 = new SingleLinkedList.Node<>(6);
+        SingleLinkedList.Node<Integer> node2 = new SingleLinkedList.Node<>(7);
+        SingleLinkedList.Node<Integer> node3 = new SingleLinkedList.Node<>(8);
+
+        linkedList.addNodeAtLast(node1);
+        linkedList.addNodeAtLast(node2);
+        linkedList.addNodeAtLast(node3);
+
+        list1.addNodeAtFirst(node1);
+        list1.addNodeAtFirst(node2);
+        list1.addNodeAtFirst(node3);
+
+
+        Set<SingleLinkedList.Node<Integer>> result = linkedList.getIntersectionNodeSet(list1);
+        Assertions.assertThat(result).hasSize(3);
+        Assertions.assertThat(result).containsOnly(node1, node2, node3);
+    }
+
+    @Test
+    @DisplayName("회문 O 테스트")
+    void validPalindromeTest() throws Exception {
+        linkedList.addLast(1);
+        linkedList.addLast(2);
+        linkedList.addLast(2);
+        linkedList.addLast(1);
+        Assertions.assertThat(linkedList.isPalindromeLinkedList(Comparator.naturalOrder())).isTrue();
     }
 
     @Test
@@ -228,9 +356,9 @@ class SingleLinkedListTest {
         linkedList.addLast(4);
         linkedList.addLast(5);
 
-        Assertions.assertThat(linkedList.getDataFromFront(3)).isEqualTo(4);
-        Assertions.assertThat(linkedList.getDataFromFront(-1)).isNull();
-        Assertions.assertThat(linkedList.getDataFromFront(50)).isNull();
+        Assertions.assertThat(linkedList.getAt(3)).isEqualTo(4);
+        Assertions.assertThat(linkedList.getAt(-1)).isNull();
+        Assertions.assertThat(linkedList.getAt(50)).isNull();
     }
 
     @Test
@@ -242,10 +370,10 @@ class SingleLinkedListTest {
         linkedList.addLast(4);
         linkedList.addLast(5);
 
-        Assertions.assertThat(linkedList.getDataFromBack(1)).isEqualTo(4);
-        Assertions.assertThat(linkedList.getDataFromBack(2)).isEqualTo(3);
-        Assertions.assertThat(linkedList.getDataFromBack(-1)).isNull();
-        Assertions.assertThat(linkedList.getDataFromBack(50)).isNull();
+        Assertions.assertThat(linkedList.getAtFromBack(1)).isEqualTo(4);
+        Assertions.assertThat(linkedList.getAtFromBack(2)).isEqualTo(3);
+        Assertions.assertThat(linkedList.getAtFromBack(-1)).isNull();
+        Assertions.assertThat(linkedList.getAtFromBack(50)).isNull();
     }
 
     @Test

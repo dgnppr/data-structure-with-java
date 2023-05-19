@@ -186,9 +186,9 @@ class TailSingleLinkedListTest {
         linkedList.addLast(4);
         linkedList.addLast(5);
 
-        Assertions.assertThat(linkedList.getDataFromFront(3)).isEqualTo(4);
-        Assertions.assertThat(linkedList.getDataFromFront(-1)).isNull();
-        Assertions.assertThat(linkedList.getDataFromFront(50)).isNull();
+        Assertions.assertThat(linkedList.getAt(3)).isEqualTo(4);
+        Assertions.assertThat(linkedList.getAt(-1)).isNull();
+        Assertions.assertThat(linkedList.getAt(50)).isNull();
     }
 
     @Test

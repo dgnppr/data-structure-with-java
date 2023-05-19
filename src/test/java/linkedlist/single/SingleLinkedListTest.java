@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 class SingleLinkedListTest {
 
@@ -307,34 +306,26 @@ class SingleLinkedListTest {
     @DisplayName("교집합 테스트")
     void intersectionTest() throws Exception {
 
+        SingleLinkedList.Node<Integer> node = new SingleLinkedList.Node<>(7);
+        linkedList.addNodeAtFirst(node);
+        linkedList.addLast(2);
+        linkedList.addLast(1);
+
         SingleLinkedList<Integer> list1 = new SingleLinkedList<>();
+        SingleLinkedList<Integer> list2 = new SingleLinkedList<>();
+        
+        list1.addLast(3);
+        list1.addLast(1);
+        list1.addLast(5);
+        list1.addLast(9);
+        list2.addLast(4);
+        list2.addLast(6);
 
-        for (int i = 0; i < 5; i++) {
-            linkedList.addNodeAtLast(new SingleLinkedList.Node<>(5 - i));
-        }
+        Assertions.assertThat(list1.getIntersectionNodeSet(list2)).isNull();
 
-        for (int i = 0; i < 5; i++) {
-            list1.addNodeAtLast(new SingleLinkedList.Node<>(5 - i));
-        }
-
-        Assertions.assertThat(linkedList.getIntersectionNodeSet(list1)).hasSize(0);
-
-        SingleLinkedList.Node<Integer> node1 = new SingleLinkedList.Node<>(6);
-        SingleLinkedList.Node<Integer> node2 = new SingleLinkedList.Node<>(7);
-        SingleLinkedList.Node<Integer> node3 = new SingleLinkedList.Node<>(8);
-
-        linkedList.addNodeAtLast(node1);
-        linkedList.addNodeAtLast(node2);
-        linkedList.addNodeAtLast(node3);
-
-        list1.addNodeAtFirst(node1);
-        list1.addNodeAtFirst(node2);
-        list1.addNodeAtFirst(node3);
-
-
-        Set<SingleLinkedList.Node<Integer>> result = linkedList.getIntersectionNodeSet(list1);
-        Assertions.assertThat(result).hasSize(3);
-        Assertions.assertThat(result).containsOnly(node1, node2, node3);
+        list1.addNodeAtLast(node);
+        list2.addNodeAtLast(node);
+        Assertions.assertThat(list1.getIntersectionNodeSet(list2)).isEqualTo(node);
     }
 
     @Test

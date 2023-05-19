@@ -337,7 +337,7 @@ public class SingleLinkedList<E> {
      * @param other 비교 연결 리스트
      * @return 교집합 노드 Set
      */
-    public Set<Node<E>> getIntersectionNodeSet(SingleLinkedList<E> other) {
+    public Node<E> getIntersectionNodeSet(SingleLinkedList<E> other) {
         if (this.isEmpty() || other.isEmpty()) return null;
 
         Set<Node<E>> nodeSet = new HashSet<>();
@@ -352,11 +352,10 @@ public class SingleLinkedList<E> {
 
         Node<E> otherPtr = other.head;
         while (otherPtr != null) {
-            if (nodeSet.contains(otherPtr)) result.add(otherPtr);
+            if (nodeSet.contains(otherPtr)) return otherPtr;
             otherPtr = otherPtr.nxt;
         }
-
-        return result;
+        return null;
     }
 
     /**

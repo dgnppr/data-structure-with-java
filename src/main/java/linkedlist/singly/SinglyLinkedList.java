@@ -1,8 +1,8 @@
-package linkedlist.single;
+package linkedlist.singly;
 
 import java.util.*;
 
-public class SingleLinkedList<E> {
+public class SinglyLinkedList<E> {
 
     protected Node<E> head;
     protected int size;
@@ -135,6 +135,30 @@ public class SingleLinkedList<E> {
     }
 
     /**
+     * 짝수 정수를 가진 노드 삭제
+     */
+    public void removeEvenData() {
+        if (isEmpty() || !(head.data instanceof Integer)) return;
+
+        Node<E> cur = head;
+        Node<E> pre = null;
+
+        while (cur != null) {
+            if ((int) cur.data % 2 == 0) {
+                if (pre == null)
+                    head = cur.nxt;
+                else
+                    pre.nxt = cur.nxt;
+
+            } else {
+                pre = cur;
+            }
+            cur = cur.nxt;
+        }
+
+    }
+
+    /**
      * 연결 리스트의 모든 데이터 조회
      *
      * @return 데이터 List
@@ -160,11 +184,11 @@ public class SingleLinkedList<E> {
      *
      * @return 데이터 List
      */
-    public SingleLinkedList<E> getReverseLinkedList() {
+    public SinglyLinkedList<E> getReverseLinkedList() {
         if (isEmpty()) return null;
 
         Node<E> ptr = head;
-        SingleLinkedList<E> ret = new SingleLinkedList<>();
+        SinglyLinkedList<E> ret = new SinglyLinkedList<>();
 
         while (ptr != null) {
             ret.addFirst(ptr.data);
@@ -180,13 +204,13 @@ public class SingleLinkedList<E> {
      * @param list2: 정수형 연결 리스트
      * @return
      */
-    public SingleLinkedList<Integer> sumOfIntegerLinkedList(SingleLinkedList<Integer> list2) {
+    public SinglyLinkedList<Integer> sumOfIntegerLinkedList(SinglyLinkedList<Integer> list2) {
         if (this.isEmpty() && list2.isEmpty()) return null;
-        else if (this.isEmpty() || list2.isEmpty()) return this.isEmpty() ? list2 : (SingleLinkedList<Integer>) this;
+        else if (this.isEmpty() || list2.isEmpty()) return this.isEmpty() ? list2 : (SinglyLinkedList<Integer>) this;
 
         Node<Integer> ptr1 = (Node<Integer>) this.head;
         Node<Integer> ptr2 = list2.head;
-        SingleLinkedList<Integer> ret = new SingleLinkedList<>();
+        SinglyLinkedList<Integer> ret = new SinglyLinkedList<>();
 
         int extra = 0;
         while (ptr1 != null && ptr2 != null) {
@@ -337,7 +361,7 @@ public class SingleLinkedList<E> {
      * @param other 비교 연결 리스트
      * @return 교집합 노드 Set
      */
-    public Node<E> getIntersectionNodeSet(SingleLinkedList<E> other) {
+    public Node<E> getIntersectionNodeSet(SinglyLinkedList<E> other) {
         if (this.isEmpty() || other.isEmpty()) return null;
 
         Set<Node<E>> nodeSet = new HashSet<>();

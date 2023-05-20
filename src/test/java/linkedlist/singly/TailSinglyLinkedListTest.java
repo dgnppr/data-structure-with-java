@@ -1,4 +1,4 @@
-package linkedlist.single;
+package linkedlist.singly;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 import java.util.Comparator;
 import java.util.List;
 
-class TailSingleLinkedListTest {
+class TailSinglyLinkedListTest {
 
-    TailSingleLinkedList<Integer> linkedList = new TailSingleLinkedList<>();
+    TailSinglyLinkedList<Integer> linkedList = new TailSinglyLinkedList<>();
     Comparator<Integer> comparator = new Comparator<>() {
         @Override
         public int compare(Integer o1, Integer o2) {

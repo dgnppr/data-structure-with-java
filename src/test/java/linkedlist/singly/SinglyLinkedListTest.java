@@ -1,4 +1,4 @@
-package linkedlist.single;
+package linkedlist.singly;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 import java.util.Comparator;
 import java.util.List;
 
-class SingleLinkedListTest {
+class SinglyLinkedListTest {
 
-    SingleLinkedList<Integer> linkedList = new SingleLinkedList<>();
+    SinglyLinkedList<Integer> linkedList = new SinglyLinkedList<>();
     Comparator<Integer> comparator = new Comparator<>() {
         @Override
         public int compare(Integer o1, Integer o2) {
@@ -39,10 +39,10 @@ class SingleLinkedListTest {
     @DisplayName("맨 앞에 노드 추가")
     void addNodeAtFirst() throws Exception {
         linkedList.addLast(1);
-        linkedList.addNodeAtLast(new SingleLinkedList.Node<Integer>(2));
-        linkedList.addNodeAtLast(new SingleLinkedList.Node<Integer>(3));
-        linkedList.addNodeAtLast(new SingleLinkedList.Node<Integer>(4));
-        linkedList.addNodeAtLast(new SingleLinkedList.Node<Integer>(5));
+        linkedList.addNodeAtLast(new SinglyLinkedList.Node<Integer>(2));
+        linkedList.addNodeAtLast(new SinglyLinkedList.Node<Integer>(3));
+        linkedList.addNodeAtLast(new SinglyLinkedList.Node<Integer>(4));
+        linkedList.addNodeAtLast(new SinglyLinkedList.Node<Integer>(5));
 
         List<Integer> allNodeData = linkedList.getAllNodeData();
 
@@ -75,7 +75,7 @@ class SingleLinkedListTest {
     void addNodeAtLast() throws Exception {
 
         for (int i = 0; i < 5; i++) {
-            linkedList.addNodeAtLast(new SingleLinkedList.Node<>(5 - i));
+            linkedList.addNodeAtLast(new SinglyLinkedList.Node<>(5 - i));
         }
 
         List<Integer> allNodeData = linkedList.getAllNodeData();
@@ -208,6 +208,21 @@ class SingleLinkedListTest {
         Assertions.assertThat(linkedList.getSize()).isEqualTo(4);
     }
 
+    @Test
+    @DisplayName("remove even data")
+    void removeEvenNode() throws Exception {
+        linkedList.addLast(1);
+        linkedList.addLast(2);
+        linkedList.addLast(3);
+        linkedList.addLast(4);
+
+        linkedList.removeEvenData();
+
+        Assertions.assertThat(linkedList.search(1, comparator)).isNotNull();
+        Assertions.assertThat(linkedList.search(2, comparator)).isNull();
+        Assertions.assertThat(linkedList.search(3, comparator)).isNotNull();
+        Assertions.assertThat(linkedList.search(4, comparator)).isNull();
+    }
 
     @Test
     @DisplayName("search test")
@@ -262,7 +277,7 @@ class SingleLinkedListTest {
         linkedList.addLast(4);
         linkedList.addLast(5);
 
-        SingleLinkedList<Integer> reverseLinkedList = linkedList.getReverseLinkedList();
+        SinglyLinkedList<Integer> reverseLinkedList = linkedList.getReverseLinkedList();
         List<Integer> allNodeData = reverseLinkedList.getAllNodeData();
         for (int i = 0; i < 5; i++) {
             Assertions.assertThat(allNodeData.get(i)).isEqualTo(5 - i);
@@ -273,8 +288,8 @@ class SingleLinkedListTest {
     @Test
     @DisplayName("연결 리스트 합 구하기")
     void sumOfListTest() throws Exception {
-        SingleLinkedList<Integer> ll1 = new SingleLinkedList<>();
-        SingleLinkedList<Integer> ll2 = new SingleLinkedList<>();
+        SinglyLinkedList<Integer> ll1 = new SinglyLinkedList<>();
+        SinglyLinkedList<Integer> ll2 = new SinglyLinkedList<>();
 
         linkedList.addLast(8);
         linkedList.addLast(8);
@@ -285,10 +300,10 @@ class SingleLinkedListTest {
         ll1.addLast(9);
         ll1.addLast(9);
 
-        SingleLinkedList<Integer> result1 = linkedList.sumOfIntegerLinkedList(ll1);
+        SinglyLinkedList<Integer> result1 = linkedList.sumOfIntegerLinkedList(ll1);
         result1.print();
 
-        SingleLinkedList<Integer> result2 = linkedList.sumOfIntegerLinkedList(ll2);
+        SinglyLinkedList<Integer> result2 = linkedList.sumOfIntegerLinkedList(ll2);
         result2.print();
     }
 
@@ -306,14 +321,14 @@ class SingleLinkedListTest {
     @DisplayName("교집합 테스트")
     void intersectionTest() throws Exception {
 
-        SingleLinkedList.Node<Integer> node = new SingleLinkedList.Node<>(7);
+        SinglyLinkedList.Node<Integer> node = new SinglyLinkedList.Node<>(7);
         linkedList.addNodeAtFirst(node);
         linkedList.addLast(2);
         linkedList.addLast(1);
 
-        SingleLinkedList<Integer> list1 = new SingleLinkedList<>();
-        SingleLinkedList<Integer> list2 = new SingleLinkedList<>();
-        
+        SinglyLinkedList<Integer> list1 = new SinglyLinkedList<>();
+        SinglyLinkedList<Integer> list2 = new SinglyLinkedList<>();
+
         list1.addLast(3);
         list1.addLast(1);
         list1.addLast(5);

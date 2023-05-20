@@ -1,6 +1,6 @@
-package linkedlist.single;
+package linkedlist.singly;
 
-public class TailSingleLinkedList<E> extends SingleLinkedList<E> {
+public class TailSinglyLinkedList<E> extends SinglyLinkedList<E> {
 
     private Node<E> tail;
 

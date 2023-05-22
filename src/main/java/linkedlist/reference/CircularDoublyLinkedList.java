@@ -1,15 +1,15 @@
-package linkedlist.doubly;
+package linkedlist.reference;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class DoubleLinkedList<E> {
+public class CircularDoublyLinkedList<E> {
 
-    private Node<E> head;
+    private final Node<E> head;
     private Node<E> cur;
 
-    public DoubleLinkedList() {
+    public CircularDoublyLinkedList() {
         head = cur = new Node<E>();
     }
 
@@ -182,7 +182,7 @@ public class DoubleLinkedList<E> {
     /**
      * 연결리스트 모든 노드의 데이터 출력
      */
-    public void dump() {
+    public void print() {
         if (isEmpty()) {
             System.out.println("List Empty");
             return;

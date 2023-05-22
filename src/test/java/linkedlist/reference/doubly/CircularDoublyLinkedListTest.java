@@ -1,5 +1,6 @@
-package linkedlist.array;
+package linkedlist.reference.doubly;
 
+import linkedlist.reference.CircularDoublyLinkedList;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,16 +8,15 @@ import org.junit.jupiter.api.Test;
 import java.util.Comparator;
 import java.util.List;
 
-class ArrayLinkedListTest {
+class CircularDoublyLinkedListTest {
 
-    ArrayLinkedList<Integer> linkedList = new ArrayLinkedList<>(10);
+    CircularDoublyLinkedList<Integer> linkedList = new CircularDoublyLinkedList<>();
     Comparator<Integer> comparator = new Comparator<>() {
         @Override
         public int compare(Integer o1, Integer o2) {
             return o1 - o2;
         }
     };
-
 
     @Test
     @DisplayName("addFirst 테스트")

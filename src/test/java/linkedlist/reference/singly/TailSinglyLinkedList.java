@@ -1,4 +1,6 @@
-package linkedlist.singly;
+package linkedlist.reference.singly;
+
+import linkedlist.reference.SinglyLinkedList;
 
 public class TailSinglyLinkedList<E> extends SinglyLinkedList<E> {
 

@@ -1,90 +1,86 @@
 package linkedlist;
 
-import linkedlist.singly.SinglyLinkedList;
-
 import java.util.Comparator;
 import java.util.List;
 
 public abstract class LinkedList<E> {
 
     public Node<E> head;
+    public Node<E> tail;
     public int size;
 
     // 삽입
 
-    public abstract void addFirst(E obj);
+    public abstract void addAtFirst(E data);
 
-    public abstract void addNodeAtFirst(Node<E> node);
+    public abstract void addAtFirst(Node<E> data);
 
-    public abstract void addLast(E obj);
+    public abstract void addAtLast(E data);
 
-    public abstract void addNodeAtLast(Node<E> node);
+    public abstract void addAtLast(Node<E> data);
+
+    public abstract void addAt(int idx, E data);
+
+    public abstract void addAt(int idx, Node<E> data);
 
     // 삭제
 
     public abstract void removeFirst();
 
+    public abstract void removeMiddle();
+
     public abstract void removeLast();
 
-    public abstract void remove(Node<E> node);
+    public abstract void removeAt(int idx);
 
-    public abstract void removeEvenData();
+    public abstract void remove(Node<E> p);
+
+    public abstract void removeIfDataIsEven();
 
     public abstract void clear();
 
-
     // 조회
 
-    public abstract E search(E data, Comparator<? super E> c);
+    public abstract boolean contains(E data, Comparator<? super E> c);
 
-    public abstract E getAt(int k);
+    public abstract E getAt(int index);
 
-    public abstract E getAtFromBack(int k);
+    public abstract E getAtFromBack(int index);
 
-    public abstract E getMiddleNodeData();
+    public abstract E getMiddle();
 
-    public abstract LinkedList<E> getNewReverseLinkedList();
+    public abstract Node<E> newReversedList();
 
-    public abstract List<E> getAllNodeData();
+    public abstract List<E> getAll();
 
-    public abstract E getFirstDataInCycle();
+    public abstract E getStartInCycle();
 
-    public abstract Node<E> getIntersectionNode(LinkedList<E> other);
+    public abstract E getIntersection(LinkedList<E> other);
 
-    public abstract void print();
+    // 수정
 
-    // 변경
+    public abstract Node<E> reverse(Node<E> head);
 
-    public abstract Node<E> reverseList(Node<E> head);
-
-    public abstract void purge(E data, Comparator<? super E> c);
+    public abstract void purge(E data, Comparator<? super E> comparator);
 
     public abstract void deduplicate();
 
+    // 문제
 
-    // 기타
     public abstract boolean isPalindrome(Comparator<? super E> c);
 
-    public abstract LinkedList<Integer> sumOfIntegerLinkedList(SinglyLinkedList<Integer> list2);
+    public abstract Node<Integer> sum(Node<Integer> p);
 
 
-    // Util
+    // 출력
 
-    public boolean isHeadOnly() {
-        return head.nxt == null;
-    }
+    public abstract void dump();
 
-    public boolean isEmpty() {
-        return head == null;
-    }
-
-    public int getSize() {
-        return size;
-    }
 
     // Node
 
     public static class Node<E> {
+
         public final E data;
         public Node<E> nxt;
 
@@ -98,6 +94,4 @@ public abstract class LinkedList<E> {
             this.nxt = null;
         }
     }
-
 }
-

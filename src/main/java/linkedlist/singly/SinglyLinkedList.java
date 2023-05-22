@@ -1,11 +1,11 @@
 package linkedlist.singly;
 
+import linkedlist.LinkedList;
+
 import java.util.*;
 
-public class SinglyLinkedList<E> {
+public class SinglyLinkedList<E> extends LinkedList<E> {
 
-    protected Node<E> head;
-    protected int size;
 
     /**
      * 데이터 탐색
@@ -14,6 +14,7 @@ public class SinglyLinkedList<E> {
      * @param c:    comparator
      * @return 탐색 데이터
      */
+    @Override
     public E search(E data, Comparator<? super E> c) {
 
         if (isEmpty()) return null;
@@ -34,11 +35,14 @@ public class SinglyLinkedList<E> {
      *
      * @param data
      */
+    @Override
     public void addFirst(E data) {
         head = new Node<>(data, head);
         size++;
     }
 
+
+    @Override
     public void addNodeAtFirst(Node<E> node) {
         node.nxt = head;
         head = node;
@@ -50,6 +54,7 @@ public class SinglyLinkedList<E> {
      *
      * @param data
      */
+    @Override
     public void addLast(E data) {
         if (isEmpty()) {
             addFirst(data);
@@ -63,6 +68,7 @@ public class SinglyLinkedList<E> {
         }
     }
 
+    @Override
     public void addNodeAtLast(Node<E> node) {
         if (isEmpty()) {
             addNodeAtFirst(node);
@@ -82,6 +88,7 @@ public class SinglyLinkedList<E> {
     /**
      * 머리 노드 삭제
      */
+    @Override
     public void removeFirst() {
         if (isEmpty()) return;
 
@@ -92,6 +99,7 @@ public class SinglyLinkedList<E> {
     /**
      * 꼬리 노드 삭제
      */
+    @Override
     public void removeLast() {
         if (isEmpty()) return;
 
@@ -116,6 +124,7 @@ public class SinglyLinkedList<E> {
      *
      * @param p: 선택 노드
      */
+    @Override
     public void remove(Node<E> p) {
         if (isEmpty()) return;
 
@@ -137,6 +146,7 @@ public class SinglyLinkedList<E> {
     /**
      * 짝수 정수를 가진 노드 삭제
      */
+    @Override
     public void removeEvenData() {
         if (isEmpty() || !(head.data instanceof Integer)) return;
 
@@ -145,24 +155,52 @@ public class SinglyLinkedList<E> {
 
         while (cur != null) {
             if ((int) cur.data % 2 == 0) {
-                if (pre == null)
-                    head = cur.nxt;
-                else
-                    pre.nxt = cur.nxt;
-
+                if (pre == null) head = cur.nxt;
+                else pre.nxt = cur.nxt;
             } else {
                 pre = cur;
             }
             cur = cur.nxt;
         }
-
     }
+
+
+    /**
+     * 사이클 시작점 데이터 반환
+     *
+     * @return
+     */
+    @Override
+    public E getFirstDataInCycle() {
+        if (isEmpty() || isHeadOnly()) return null;
+
+        Node<E> slow = head;
+        Node<E> fast = head.nxt;
+
+        // 1. 사이클 찾기
+        while (slow != fast) {
+            if (fast == null || fast.nxt == null) return null;
+            slow = slow.nxt;
+            fast = fast.nxt.nxt;
+        }
+
+        // 2. 사이클 시작점 데이터 리턴
+        slow = head;
+        while (slow != fast.nxt) {
+            slow = slow.nxt;
+            fast = fast.nxt;
+        }
+
+        return slow.data;
+    }
+
 
     /**
      * 연결 리스트의 모든 데이터 조회
      *
      * @return 데이터 List
      */
+    @Override
     public List<E> getAllNodeData() {
         if (isEmpty()) {
             return null;
@@ -184,7 +222,8 @@ public class SinglyLinkedList<E> {
      *
      * @return 데이터 List
      */
-    public SinglyLinkedList<E> getReverseLinkedList() {
+    @Override
+    public SinglyLinkedList<E> getNewReverseLinkedList() {
         if (isEmpty()) return null;
 
         Node<E> ptr = head;
@@ -198,12 +237,30 @@ public class SinglyLinkedList<E> {
         return ret;
     }
 
+
+    @Override
+    public Node<E> reverseList(Node<E> head) {
+        Node<E> prev = null;
+        Node<E> cur = head;
+
+        while (cur != null) {
+            Node<E> nxt = cur.nxt;
+            cur.nxt = prev;
+            prev = cur;
+            cur = nxt;
+        }
+
+        return prev;
+    }
+
+
     /**
      * 정수형 연결 리스트의 합
      *
      * @param list2: 정수형 연결 리스트
      * @return
      */
+    @Override
     public SinglyLinkedList<Integer> sumOfIntegerLinkedList(SinglyLinkedList<Integer> list2) {
         if (this.isEmpty() && list2.isEmpty()) return null;
         else if (this.isEmpty() || list2.isEmpty()) return this.isEmpty() ? list2 : (SinglyLinkedList<Integer>) this;
@@ -249,7 +306,7 @@ public class SinglyLinkedList<E> {
             ret.addFirst(extra);
         }
 
-        return ret.getReverseLinkedList();
+        return ret.getNewReverseLinkedList();
     }
 
     /**
@@ -258,17 +315,33 @@ public class SinglyLinkedList<E> {
      * @param c: comparator
      * @return 회문이면 true 아니면 false
      */
-    public boolean isPalindromeLinkedList(Comparator<? super E> c) {
+    @Override
+    public boolean isPalindrome(Comparator<? super E> c) {
 
         if (isEmpty()) return false;
+        else if (isHeadOnly()) return true;
 
-        Node<E> ptr = this.head;
-        Node<E> reversedPtr = this.getReverseLinkedList().head;
+        Node<E> slow = head;
+        Node<E> fast = head;
 
-        while (ptr != reversedPtr) {
-            if (c.compare(ptr.data, reversedPtr.data) != 0) return false;
-            ptr = ptr.nxt;
-            reversedPtr = reversedPtr.nxt;
+        // 1. 중간 지점 찾기 찾는다
+        while (fast != null && fast.nxt != null) {
+            slow = slow.nxt;
+            fast = fast.nxt.nxt;
+        }
+
+        // 2. 중간 지점 이후의 노드들을 역순으로 뒤집는다.
+        Node<E> reversedHead = reverseList(slow);
+
+        // 3. 앞쪽과 뒤쪽의 노드들을 순차적으로 비교
+        Node<E> p1 = head;
+        Node<E> p2 = reversedHead;
+
+        while (p1 != null && p2 != null) {
+            if (c.compare(p1.data, p2.data) != 0) return false;
+
+            p1 = p1.nxt;
+            p2 = p2.nxt;
         }
 
         return true;
@@ -280,6 +353,7 @@ public class SinglyLinkedList<E> {
      * @param data: 삭제 데이터
      * @param c:    comparator
      */
+    @Override
     public void purge(E data, Comparator<? super E> c) {
 
         if (isEmpty()) return;
@@ -305,6 +379,7 @@ public class SinglyLinkedList<E> {
      * @param k: 인덱스
      * @return 헤드 노드에서 idx 뒤에 위치한 노드의 데이터
      */
+    @Override
     public E getAt(int k) {
         if (isEmpty() || k > size) return null;
 
@@ -328,6 +403,7 @@ public class SinglyLinkedList<E> {
      * @param k: 인덱스
      * @return 헤드 노드에서 idx 뒤에 위치한 노드의 데이터
      */
+    @Override
     public E getAtFromBack(int k) {
         if (isEmpty() || k > size || k < 0) return null;
 
@@ -351,6 +427,7 @@ public class SinglyLinkedList<E> {
      *
      * @return 중간 위치 노드 데이터
      */
+    @Override
     public E getMiddleNodeData() {
         return getAt(size / 2);
     }
@@ -361,11 +438,11 @@ public class SinglyLinkedList<E> {
      * @param other 비교 연결 리스트
      * @return 교집합 노드 Set
      */
-    public Node<E> getIntersectionNodeSet(SinglyLinkedList<E> other) {
+    @Override
+    public Node<E> getIntersectionNode(LinkedList<E> other) {
         if (this.isEmpty() || other.isEmpty()) return null;
 
         Set<Node<E>> nodeSet = new HashSet<>();
-        Set<Node<E>> result = new HashSet<>();
 
         Node<E> ptr = this.head;
 
@@ -385,6 +462,7 @@ public class SinglyLinkedList<E> {
     /**
      * 중복 없애기
      */
+    @Override
     public void deduplicate() {
         if (isEmpty()) return;
 
@@ -404,6 +482,7 @@ public class SinglyLinkedList<E> {
     /**
      * 연결 리스트 처음부터 모든 노드의 데이터 출력
      */
+    @Override
     public void print() {
         if (isEmpty()) {
             System.out.println("LinkedList is Empty");
@@ -419,6 +498,7 @@ public class SinglyLinkedList<E> {
         System.out.println(sb);
     }
 
+    @Override
     public void clear() {
         if (isEmpty()) return;
 
@@ -427,36 +507,5 @@ public class SinglyLinkedList<E> {
         }
     }
 
-
-    protected boolean isHeadOnly() {
-        return head.nxt == null;
-    }
-
-    protected boolean isEmpty() {
-        return head == null;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    static class Node<E> {
-        protected final E data;
-        protected Node<E> nxt;
-
-        protected Node(E data, Node<E> nxt) {
-            this.data = data;
-            this.nxt = nxt;
-        }
-
-        public Node(E data) {
-            this.data = data;
-            this.nxt = null;
-        }
-
-        public void setNxt(Node<E> nxt) {
-            this.nxt = nxt;
-        }
-    }
 
 }

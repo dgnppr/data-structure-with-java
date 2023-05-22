@@ -156,6 +156,26 @@ class SinglyLinkedListTest {
     }
 
     @Test
+    @DisplayName("싸이클 확인 테스트")
+    void hasCycleTest() throws Exception {
+
+        SinglyLinkedList.Node<Integer> node = new SinglyLinkedList.Node<>(2);
+
+        linkedList.addLast(1);
+        linkedList.addNodeAtLast(node);
+        linkedList.addLast(3);
+        linkedList.addLast(4);
+        linkedList.addLast(5);
+        linkedList.addLast(6);
+        linkedList.addLast(7);
+        linkedList.addLast(8);
+        linkedList.addNodeAtLast(new SinglyLinkedList.Node<>(9, node));
+
+        Assertions.assertThat(linkedList.getFirstDataInCycle()).isEqualTo(2);
+        Assertions.assertThat(linkedList.getFirstDataInCycle()).isNotEqualTo(3);
+    }
+
+    @Test
     @DisplayName("clear test")
     void clear() throws Exception {
 
@@ -277,7 +297,7 @@ class SinglyLinkedListTest {
         linkedList.addLast(4);
         linkedList.addLast(5);
 
-        SinglyLinkedList<Integer> reverseLinkedList = linkedList.getReverseLinkedList();
+        SinglyLinkedList<Integer> reverseLinkedList = linkedList.getNewReverseLinkedList();
         List<Integer> allNodeData = reverseLinkedList.getAllNodeData();
         for (int i = 0; i < 5; i++) {
             Assertions.assertThat(allNodeData.get(i)).isEqualTo(5 - i);
@@ -314,7 +334,7 @@ class SinglyLinkedListTest {
         linkedList.addLast(1);
         linkedList.addLast(2);
         linkedList.addLast(3);
-        Assertions.assertThat(linkedList.isPalindromeLinkedList(Comparator.naturalOrder())).isFalse();
+        Assertions.assertThat(linkedList.isPalindrome(Comparator.naturalOrder())).isFalse();
     }
 
     @Test
@@ -336,11 +356,11 @@ class SinglyLinkedListTest {
         list2.addLast(4);
         list2.addLast(6);
 
-        Assertions.assertThat(list1.getIntersectionNodeSet(list2)).isNull();
+        Assertions.assertThat(list1.getIntersectionNode(list2)).isNull();
 
         list1.addNodeAtLast(node);
         list2.addNodeAtLast(node);
-        Assertions.assertThat(list1.getIntersectionNodeSet(list2)).isEqualTo(node);
+        Assertions.assertThat(list1.getIntersectionNode(list2)).isEqualTo(node);
     }
 
     @Test
@@ -350,7 +370,7 @@ class SinglyLinkedListTest {
         linkedList.addLast(2);
         linkedList.addLast(2);
         linkedList.addLast(1);
-        Assertions.assertThat(linkedList.isPalindromeLinkedList(Comparator.naturalOrder())).isTrue();
+        Assertions.assertThat(linkedList.isPalindrome(Comparator.naturalOrder())).isTrue();
     }
 
     @Test

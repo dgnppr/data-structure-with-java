@@ -2,6 +2,7 @@ package linkedlist.singly;
 
 import linkedlist.LinkedList;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -10,108 +11,382 @@ public class SinglyLinkedList<E> extends LinkedList<E> {
     @Override
     public void addAtFirst(E data) {
         head = new Node<>(data, head);
-        size++;
-    }
-
-    @Override
-    public void addAtFirst(Node<E> data) {
-        data.nxt = head;
+        if (tail == null) tail = head;
         size++;
     }
 
     @Override
     public void addAtLast(E data) {
-
+        if (isEmpty()) {
+            addAtFirst(data);
+            return;
+        } else {
+            Node<E> ptr = head;
+            while (ptr.nxt != null) {
+                ptr = ptr.nxt;
+            }
+            ptr.nxt = new Node<>(data, null);
+            tail = ptr.nxt;
+        }
+        size++;
     }
 
     @Override
-    public void addAtLast(Node<E> data) {
+    public void addAtFirst(Node<E> node) {
+        node.nxt = head;
+        if (tail == null) tail = node;
+        head = node;
+        size++;
+    }
 
+    @Override
+    public void addAtLast(Node<E> node) {
+        if (isEmpty()) {
+            addAtFirst(node);
+            return;
+        } else {
+            Node<E> ptr = head;
+            while (ptr.nxt != null) {
+                ptr = ptr.nxt;
+            }
+            ptr.nxt = node;
+            tail = node;
+        }
+        size++;
     }
 
     @Override
     public void addAt(int idx, E data) {
 
+        if (idx < 0 || idx > size) {
+            System.out.println("Out of index");
+            return;
+        }
+
+        if (idx == 0) {
+            addAtFirst(data);
+        } else if (idx == size) {
+            addAtLast(data);
+        } else {
+
+            int cnt = 0;
+
+            Node<E> cur = head;
+            Node<E> pre = head;
+
+            while (cur != null) {
+                if (cnt == idx) {
+                    pre.nxt = new Node<>(data, cur);
+                    size++;
+                    return;
+                }
+
+                pre = cur;
+                cur = cur.nxt;
+                cnt++;
+            }
+        }
     }
 
     @Override
-    public void addAt(int idx, Node<E> data) {
+    public void addAt(int idx, Node<E> node) {
+        if (idx < 0 || idx > size) {
+            System.out.println("Out of index");
+            return;
+        }
 
+        if (idx == 0) {
+            addAtFirst(node);
+        } else if (idx == size) {
+            addAtLast(node);
+        } else {
+
+            int cnt = 0;
+
+            Node<E> cur = head;
+            Node<E> pre = head;
+
+            while (cur != null) {
+                if (cnt == idx) {
+                    pre.nxt = node;
+                    node.nxt = cur;
+                    size++;
+                    return;
+                }
+
+                pre = cur;
+                cur = cur.nxt;
+                cnt++;
+            }
+        }
+    }
+
+    public void append(LinkedList<E> other) {
+        if (isEmpty() || other.isEmpty()) return;
+        this.tail.nxt = other.head;
+        this.tail = other.tail;
+        this.size += other.getSize();
     }
 
     @Override
     public void removeFirst() {
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+            return;
+        }
 
+        if (isHeadOnly()) tail = null;
+        head = head.nxt;
+        size--;
     }
 
     @Override
     public void removeMiddle() {
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+        }
 
+        removeAt(size / 2);
     }
 
     @Override
     public void removeLast() {
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+            return;
+        }
+
+        if (isHeadOnly()) {
+            removeFirst();
+        } else {
+
+            Node<E> ptr = head;
+            while (ptr.nxt != tail) {
+                ptr = ptr.nxt;
+            }
+
+            ptr.nxt = null;
+            tail = ptr;
+            size--;
+        }
 
     }
 
     @Override
     public void removeAt(int idx) {
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+            return;
+        }
 
+        if (idx == 0) {
+            removeFirst();
+        } else if (idx == size - 1) {
+            removeLast();
+        } else {
+            int cnt = 0;
+
+            Node<E> cur = head;
+            Node<E> pre = head;
+
+            while (cur != null) {
+
+                if (cnt == idx) {
+                    pre.nxt = cur.nxt;
+                    size--;
+                    return;
+                }
+
+                pre = cur;
+                cur = cur.nxt;
+                cnt++;
+            }
+        }
     }
 
     @Override
     public void remove(Node<E> p) {
 
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+            return;
+        }
+
+        if (head == p) {
+            removeFirst();
+        } else if (tail == p) {
+            removeLast();
+        } else {
+            Node<E> ptr = head;
+
+            while (ptr.nxt != p) {
+                ptr = ptr.nxt;
+                if (ptr.nxt == null) {
+                    return;
+                }
+            }
+
+            ptr.nxt = p.nxt;
+            size--;
+        }
     }
 
     @Override
     public void removeIfDataIsEven() {
 
+        if (isEmpty() || !(head.data instanceof Integer)) return;
+
+        Node<E> ptr = head;
+        Node<E> pre = null;
+
+        while (ptr != null) {
+            if ((Integer) ptr.data % 2 == 0) {
+                if (pre == null) {
+                    head = ptr.nxt;
+                    if (ptr == tail) tail = null;
+                } else {
+                    pre.nxt = ptr.nxt;
+                    if (ptr == tail) tail = pre;
+                }
+                size--;
+            } else {
+                pre = ptr;
+            }
+            ptr = ptr.nxt;
+        }
     }
 
     @Override
     public void clear() {
 
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+            return;
+        }
+        Node<E> ptr = head;
+        while (ptr != null) {
+            removeFirst();
+            ptr = ptr.nxt;
+        }
     }
 
     @Override
     public boolean contains(E data, Comparator<? super E> c) {
+
+        Node<E> ptr = head;
+
+        while (ptr != null) {
+            if (c.compare(ptr.data, data) == 0) {
+                return true;
+            }
+            ptr = ptr.nxt;
+        }
+
         return false;
     }
 
     @Override
     public E getAt(int index) {
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+            return null;
+        } else if (index < 0 || index > size) {
+            System.out.println("Out of index");
+            return null;
+        }
+
+        if (index == 0) {
+            return head.data;
+        } else if (index == size - 1) {
+            return tail.data;
+        } else {
+            int cnt = 0;
+            Node<E> ptr = head;
+            while (ptr != null) {
+                if (cnt == index) {
+                    return ptr.data;
+                }
+
+                ptr = ptr.nxt;
+                cnt++;
+            }
+        }
+
         return null;
     }
 
     @Override
     public E getAtFromBack(int index) {
-        return null;
+        return getAt(size - index - 1);
     }
 
     @Override
     public E getMiddle() {
-        return null;
-    }
-
-    @Override
-    public Node<E> newReversedList() {
-        return null;
+        return getAt(size / 2);
     }
 
     @Override
     public List<E> getAll() {
-        return null;
+
+        if (isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<E> rst = new ArrayList<>();
+        Node<E> ptr = head;
+
+        while (ptr != null) {
+            rst.add(ptr.data);
+            ptr = ptr.nxt;
+        }
+
+        return rst;
     }
 
     @Override
     public E getStartInCycle() {
-        return null;
+        if (isEmpty() || isHeadOnly()) return null;
+
+        Node<E> slow = this.head;
+        Node<E> fast = this.head.nxt;
+
+        while (slow != fast) {
+            if (fast == null || fast.nxt == null) return null;
+            slow = slow.nxt;
+            fast = fast.nxt.nxt;
+        }
+
+        slow = head;
+        while (slow != fast.nxt) {
+            slow = slow.nxt;
+            fast = fast.nxt;
+        }
+
+        return slow.data;
     }
 
     @Override
     public E getIntersection(LinkedList<E> other) {
-        return null;
+        if (this.isEmpty() || other.isEmpty() || this.tail != other.tail) return null;
+
+        int thisSize = this.size;
+        int otherSize = other.size;
+
+        Node<E> shorter = (thisSize < otherSize) ? this.head : other.head;
+        Node<E> longer = (thisSize < otherSize) ? other.head : this.head;
+
+        int cnt = 0;
+        while (cnt != Math.abs(thisSize - otherSize)) {
+            longer = longer.nxt;
+            cnt++;
+        }
+
+        while (longer != shorter) {
+            shorter = shorter.nxt;
+            longer = longer.nxt;
+        }
+
+        return longer.data;
     }
 
     @Override
@@ -141,6 +416,18 @@ public class SinglyLinkedList<E> extends LinkedList<E> {
 
     @Override
     public void dump() {
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+            return;
+        }
 
+        Node<E> ptr = head;
+        StringBuilder rst = new StringBuilder();
+        while (ptr != null) {
+            rst.append(ptr.data).append(" ");
+            ptr = ptr.nxt;
+        }
+
+        System.out.println(rst);
     }
 }

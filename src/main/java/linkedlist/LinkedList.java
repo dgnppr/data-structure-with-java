@@ -7,7 +7,7 @@ public abstract class LinkedList<E> {
 
     public Node<E> head;
     public Node<E> tail;
-    public int size;
+    public int size = 0;
 
     // 삽입
 
@@ -17,11 +17,13 @@ public abstract class LinkedList<E> {
 
     public abstract void addAtLast(E data);
 
-    public abstract void addAtLast(Node<E> data);
+    public abstract void addAtLast(Node<E> node);
 
     public abstract void addAt(int idx, E data);
 
-    public abstract void addAt(int idx, Node<E> data);
+    public abstract void addAt(int idx, Node<E> node);
+
+    public abstract void append(LinkedList<E> other);
 
     // 삭제
 
@@ -49,8 +51,6 @@ public abstract class LinkedList<E> {
 
     public abstract E getMiddle();
 
-    public abstract Node<E> newReversedList();
-
     public abstract List<E> getAll();
 
     public abstract E getStartInCycle();
@@ -76,12 +76,33 @@ public abstract class LinkedList<E> {
 
     public abstract void dump();
 
+    // Util
+
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    public boolean isHeadOnly() {
+        return head.nxt == null;
+    }
+
+    public E getHead() {
+        return (head == null) ? null : head.data;
+    }
+
+    public E getTail() {
+        return (tail == null) ? null : tail.data;
+    }
+
+    public int getSize() {
+        return size;
+    }
 
     // Node
 
     public static class Node<E> {
 
-        public final E data;
+        public E data;
         public Node<E> nxt;
 
         public Node(E data, Node<E> nxt) {

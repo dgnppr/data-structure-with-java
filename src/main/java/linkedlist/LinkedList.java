@@ -3,7 +3,7 @@ package linkedlist;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class LinkedList<E> {
+public abstract class LinkedList<E, K extends Node<E>, L extends LinkedList> {
 
     public Node<E> head;
     public Node<E> tail;
@@ -13,17 +13,17 @@ public abstract class LinkedList<E> {
 
     public abstract void addAtFirst(E data);
 
-    public abstract void addAtFirst(Node<E> data);
+    public abstract void addAtFirst(K node);
 
     public abstract void addAtLast(E data);
 
-    public abstract void addAtLast(Node<E> node);
+    public abstract void addAtLast(K node);
 
     public abstract void addAt(int idx, E data);
 
-    public abstract void addAt(int idx, Node<E> node);
+    public abstract void addAt(int idx, K node);
 
-    public abstract void append(LinkedList<E> other);
+    public abstract void append(L other);
 
     // 삭제
 
@@ -35,7 +35,7 @@ public abstract class LinkedList<E> {
 
     public abstract void removeAt(int idx);
 
-    public abstract void remove(Node<E> p);
+    public abstract void remove(K p);
 
     public abstract void removeIfDataIsEven();
 
@@ -55,13 +55,11 @@ public abstract class LinkedList<E> {
 
     public abstract E getStartInCycle();
 
-    public abstract E getIntersection(LinkedList<E> other);
+    public abstract E getIntersection(L other);
 
     // 수정
 
-    public abstract Node<E> reverse(Node<E> head);
-
-    public abstract void purge(E data, Comparator<? super E> comparator);
+    public abstract void reverse();
 
     public abstract void deduplicate();
 
@@ -69,7 +67,9 @@ public abstract class LinkedList<E> {
 
     public abstract boolean isPalindrome(Comparator<? super E> c);
 
-    public abstract Node<Integer> sum(Node<Integer> p);
+    public abstract K sum(K p);
+
+    public abstract K reverse(K node);
 
 
     // 출력
@@ -98,21 +98,4 @@ public abstract class LinkedList<E> {
         return size;
     }
 
-    // Node
-
-    public static class Node<E> {
-
-        public E data;
-        public Node<E> nxt;
-
-        public Node(E data, Node<E> nxt) {
-            this.data = data;
-            this.nxt = nxt;
-        }
-
-        public Node(E data) {
-            this.data = data;
-            this.nxt = null;
-        }
-    }
 }

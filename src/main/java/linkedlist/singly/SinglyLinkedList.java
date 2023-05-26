@@ -1,12 +1,11 @@
 package linkedlist.singly;
 
 import linkedlist.LinkedList;
+import linkedlist.Node;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-public class SinglyLinkedList<E> extends LinkedList<E> {
+public class SinglyLinkedList<E, K extends Node<E>, L extends SinglyLinkedList> extends LinkedList<E, K, L> {
 
     @Override
     public void addAtFirst(E data) {
@@ -32,7 +31,7 @@ public class SinglyLinkedList<E> extends LinkedList<E> {
     }
 
     @Override
-    public void addAtFirst(Node<E> node) {
+    public void addAtFirst(K node) {
         node.nxt = head;
         if (tail == null) tail = node;
         head = node;
@@ -40,7 +39,7 @@ public class SinglyLinkedList<E> extends LinkedList<E> {
     }
 
     @Override
-    public void addAtLast(Node<E> node) {
+    public void addAtLast(K node) {
         if (isEmpty()) {
             addAtFirst(node);
             return;
@@ -89,7 +88,7 @@ public class SinglyLinkedList<E> extends LinkedList<E> {
     }
 
     @Override
-    public void addAt(int idx, Node<E> node) {
+    public void addAt(int idx, K node) {
         if (idx < 0 || idx > size) {
             System.out.println("Out of index");
             return;
@@ -121,7 +120,8 @@ public class SinglyLinkedList<E> extends LinkedList<E> {
         }
     }
 
-    public void append(LinkedList<E> other) {
+    @Override
+    public void append(L other) {
         if (isEmpty() || other.isEmpty()) return;
         this.tail.nxt = other.head;
         this.tail = other.tail;
@@ -205,7 +205,7 @@ public class SinglyLinkedList<E> extends LinkedList<E> {
     }
 
     @Override
-    public void remove(Node<E> p) {
+    public void remove(K p) {
 
         if (isEmpty()) {
             System.out.println("LinkedList is Empty");
@@ -366,7 +366,7 @@ public class SinglyLinkedList<E> extends LinkedList<E> {
     }
 
     @Override
-    public E getIntersection(LinkedList<E> other) {
+    public E getIntersection(L other) {
         if (this.isEmpty() || other.isEmpty() || this.tail != other.tail) return null;
 
         int thisSize = this.size;
@@ -390,27 +390,104 @@ public class SinglyLinkedList<E> extends LinkedList<E> {
     }
 
     @Override
-    public Node<E> reverse(Node<E> head) {
-        return null;
-    }
+    public void reverse() {
 
-    @Override
-    public void purge(E data, Comparator<? super E> comparator) {
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+            return;
+        }
+
+        Node<E> cur = head;
+        Node<E> pre = null;
+
+        while (cur != null) {
+            Node<E> nxt = cur.nxt;
+
+            cur.nxt = pre;
+            if (pre == null) {
+                pre = cur;
+                tail = pre;
+            }
+
+            pre = cur;
+            cur = nxt;
+
+            if (nxt == null) {
+                head = pre;
+                return;
+            }
+        }
 
     }
 
     @Override
     public void deduplicate() {
+        if (isEmpty() || isHeadOnly()) return;
 
+        Set<E> vis = new HashSet<>();
+        Node<E> cur = head;
+        Node<E> pre = null;
+
+        while (cur != null) {
+            if (!vis.contains(cur.data)) {
+                vis.add(cur.data);
+                pre = cur;
+            } else {
+                pre.nxt = cur.nxt;
+                size--;
+                if (cur == tail) tail = pre;
+            }
+            cur = cur.nxt;
+        }
     }
 
     @Override
     public boolean isPalindrome(Comparator<? super E> c) {
-        return false;
+        if (isEmpty()) return false;
+        if (isHeadOnly()) return true;
+
+        Node<E> cur = head;
+        int cnt = 0;
+        while (cur != null) {
+            if (cnt == size / 2) {
+                break;
+            }
+            cnt++;
+            cur = cur.nxt;
+        }
+
+        Node<E> list1 = head;
+        Node<E> list2 = reverse((K) cur);
+
+        while (list1 != null && list2 != null) {
+            if (c.compare(list1.data, list2.data) != 0) return false;
+            list1 = list1.nxt;
+            list2 = list2.nxt;
+        }
+
+        return true;
+
+    }
+
+
+    @Override
+    public K reverse(K node) {
+        Node<E> cur = node;
+        Node<E> pre = null;
+
+        while (cur != null) {
+            Node<E> nxt = cur.nxt;
+            cur.nxt = pre;
+            pre = cur;
+            cur = nxt;
+        }
+
+        return (K) pre;
+
     }
 
     @Override
-    public Node<Integer> sum(Node<Integer> p) {
+    public K sum(K p) {
         return null;
     }
 

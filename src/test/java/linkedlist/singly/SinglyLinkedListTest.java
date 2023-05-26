@@ -1,6 +1,6 @@
 package linkedlist.singly;
 
-import linkedlist.LinkedList;
+import linkedlist.Node;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +11,7 @@ import java.util.List;
 
 class SinglyLinkedListTest {
 
-    SinglyLinkedList<Integer> linkedList;
+    SinglyLinkedList<Integer, Node<Integer>, SinglyLinkedList> linkedList;
 
     @BeforeEach
     void setUp() {
@@ -19,16 +19,16 @@ class SinglyLinkedListTest {
     }
 
     private void init() {
-        linkedList.addAtLast(new LinkedList.Node<>(1));
-        linkedList.addAtLast(new LinkedList.Node<>(2));
-        linkedList.addAtLast(new LinkedList.Node<>(3));
-        linkedList.addAtLast(new LinkedList.Node<>(4));
-        linkedList.addAtLast(new LinkedList.Node<>(5));
-        linkedList.addAtLast(new LinkedList.Node<>(6));
-        linkedList.addAtLast(new LinkedList.Node<>(7));
-        linkedList.addAtLast(new LinkedList.Node<>(8));
-        linkedList.addAtLast(new LinkedList.Node<>(9));
-        linkedList.addAtLast(new LinkedList.Node<>(10));
+        linkedList.addAtLast(new Node<>(1));
+        linkedList.addAtLast(new Node<>(2));
+        linkedList.addAtLast(new Node<>(3));
+        linkedList.addAtLast(new Node<>(4));
+        linkedList.addAtLast(new Node<>(5));
+        linkedList.addAtLast(new Node<>(6));
+        linkedList.addAtLast(new Node<>(7));
+        linkedList.addAtLast(new Node<>(8));
+        linkedList.addAtLast(new Node<>(9));
+        linkedList.addAtLast(new Node<>(10));
     }
 
     @Test
@@ -82,16 +82,16 @@ class SinglyLinkedListTest {
     @Test
     void addNodeAtFirst() {
 
-        linkedList.addAtFirst(new LinkedList.Node<>(10));
-        linkedList.addAtFirst(new LinkedList.Node<>(9));
-        linkedList.addAtFirst(new LinkedList.Node<>(8));
-        linkedList.addAtFirst(new LinkedList.Node<>(7));
-        linkedList.addAtFirst(new LinkedList.Node<>(6));
-        linkedList.addAtFirst(new LinkedList.Node<>(5));
-        linkedList.addAtFirst(new LinkedList.Node<>(4));
-        linkedList.addAtFirst(new LinkedList.Node<>(3));
-        linkedList.addAtFirst(new LinkedList.Node<>(2));
-        linkedList.addAtFirst(new LinkedList.Node<>(1));
+        linkedList.addAtFirst(new Node<>(10));
+        linkedList.addAtFirst(new Node<>(9));
+        linkedList.addAtFirst(new Node<>(8));
+        linkedList.addAtFirst(new Node<>(7));
+        linkedList.addAtFirst(new Node<>(6));
+        linkedList.addAtFirst(new Node<>(5));
+        linkedList.addAtFirst(new Node<>(4));
+        linkedList.addAtFirst(new Node<>(3));
+        linkedList.addAtFirst(new Node<>(2));
+        linkedList.addAtFirst(new Node<>(1));
 
         List<Integer> integers = linkedList.getAll();
         for (int i = 0; i < integers.size(); i++) {
@@ -106,16 +106,16 @@ class SinglyLinkedListTest {
     @Test
     void addNodeAtLast() {
 
-        linkedList.addAtLast(new LinkedList.Node<>(1));
-        linkedList.addAtLast(new LinkedList.Node<>(2));
-        linkedList.addAtLast(new LinkedList.Node<>(3));
-        linkedList.addAtLast(new LinkedList.Node<>(4));
-        linkedList.addAtLast(new LinkedList.Node<>(5));
-        linkedList.addAtLast(new LinkedList.Node<>(6));
-        linkedList.addAtLast(new LinkedList.Node<>(7));
-        linkedList.addAtLast(new LinkedList.Node<>(8));
-        linkedList.addAtLast(new LinkedList.Node<>(9));
-        linkedList.addAtLast(new LinkedList.Node<>(10));
+        linkedList.addAtLast(new Node<>(1));
+        linkedList.addAtLast(new Node<>(2));
+        linkedList.addAtLast(new Node<>(3));
+        linkedList.addAtLast(new Node<>(4));
+        linkedList.addAtLast(new Node<>(5));
+        linkedList.addAtLast(new Node<>(6));
+        linkedList.addAtLast(new Node<>(7));
+        linkedList.addAtLast(new Node<>(8));
+        linkedList.addAtLast(new Node<>(9));
+        linkedList.addAtLast(new Node<>(10));
 
         List<Integer> integers = linkedList.getAll();
         for (int i = 0; i < integers.size(); i++) {
@@ -130,15 +130,15 @@ class SinglyLinkedListTest {
     @Test
     void addAt() {
 
-        linkedList.addAtLast(new LinkedList.Node<>(1));
-        linkedList.addAtLast(new LinkedList.Node<>(2));
-        linkedList.addAtLast(new LinkedList.Node<>(3));
-        linkedList.addAtLast(new LinkedList.Node<>(4));
-        linkedList.addAtLast(new LinkedList.Node<>(6));
-        linkedList.addAtLast(new LinkedList.Node<>(7));
-        linkedList.addAtLast(new LinkedList.Node<>(8));
-        linkedList.addAtLast(new LinkedList.Node<>(9));
-        linkedList.addAtLast(new LinkedList.Node<>(10));
+        linkedList.addAtLast(new Node<>(1));
+        linkedList.addAtLast(new Node<>(2));
+        linkedList.addAtLast(new Node<>(3));
+        linkedList.addAtLast(new Node<>(4));
+        linkedList.addAtLast(new Node<>(6));
+        linkedList.addAtLast(new Node<>(7));
+        linkedList.addAtLast(new Node<>(8));
+        linkedList.addAtLast(new Node<>(9));
+        linkedList.addAtLast(new Node<>(10));
 
         linkedList.addAt(4, 5);
 
@@ -154,17 +154,17 @@ class SinglyLinkedListTest {
 
     @Test
     void addNodeAt() {
-        linkedList.addAtLast(new LinkedList.Node<>(1));
-        linkedList.addAtLast(new LinkedList.Node<>(2));
-        linkedList.addAtLast(new LinkedList.Node<>(3));
-        linkedList.addAtLast(new LinkedList.Node<>(4));
-        linkedList.addAtLast(new LinkedList.Node<>(6));
-        linkedList.addAtLast(new LinkedList.Node<>(7));
-        linkedList.addAtLast(new LinkedList.Node<>(8));
-        linkedList.addAtLast(new LinkedList.Node<>(9));
-        linkedList.addAtLast(new LinkedList.Node<>(10));
+        linkedList.addAtLast(new Node<>(1));
+        linkedList.addAtLast(new Node<>(2));
+        linkedList.addAtLast(new Node<>(3));
+        linkedList.addAtLast(new Node<>(4));
+        linkedList.addAtLast(new Node<>(6));
+        linkedList.addAtLast(new Node<>(7));
+        linkedList.addAtLast(new Node<>(8));
+        linkedList.addAtLast(new Node<>(9));
+        linkedList.addAtLast(new Node<>(10));
 
-        linkedList.addAt(4, new LinkedList.Node<>(5));
+        linkedList.addAt(4, new Node<>(5));
 
         List<Integer> integers = linkedList.getAll();
         for (int i = 0; i < integers.size(); i++) {
@@ -301,18 +301,18 @@ class SinglyLinkedListTest {
     @Test
     void remove() {
 
-        LinkedList.Node<Integer> target = new LinkedList.Node<>(7);
+        Node<Integer> target = new Node<>(7);
 
-        linkedList.addAtLast(new LinkedList.Node<>(1));
-        linkedList.addAtLast(new LinkedList.Node<>(2));
-        linkedList.addAtLast(new LinkedList.Node<>(3));
-        linkedList.addAtLast(new LinkedList.Node<>(4));
-        linkedList.addAtLast(new LinkedList.Node<>(5));
-        linkedList.addAtLast(new LinkedList.Node<>(6));
+        linkedList.addAtLast(new Node<>(1));
+        linkedList.addAtLast(new Node<>(2));
+        linkedList.addAtLast(new Node<>(3));
+        linkedList.addAtLast(new Node<>(4));
+        linkedList.addAtLast(new Node<>(5));
+        linkedList.addAtLast(new Node<>(6));
         linkedList.addAtLast(target);
-        linkedList.addAtLast(new LinkedList.Node<>(8));
-        linkedList.addAtLast(new LinkedList.Node<>(9));
-        linkedList.addAtLast(new LinkedList.Node<>(10));
+        linkedList.addAtLast(new Node<>(8));
+        linkedList.addAtLast(new Node<>(9));
+        linkedList.addAtLast(new Node<>(10));
 
         linkedList.remove(target);
 
@@ -327,7 +327,7 @@ class SinglyLinkedListTest {
     @Test
     void removeHead() {
 
-        LinkedList.Node<Integer> head = new LinkedList.Node<>(1);
+        Node<Integer> head = new Node<>(1);
         linkedList.addAtLast(head);
 
         linkedList.remove(head);
@@ -343,7 +343,7 @@ class SinglyLinkedListTest {
     void removeTail() {
 
         init();
-        LinkedList.Node<Integer> tail = new LinkedList.Node<>(11);
+        Node<Integer> tail = new Node<>(11);
         linkedList.addAtLast(tail);
 
         linkedList.remove(tail);
@@ -418,7 +418,7 @@ class SinglyLinkedListTest {
 
     @Test
     void getStartInCycle() {
-        SinglyLinkedList.Node<Integer> node = new SinglyLinkedList.Node<>(5);
+        Node<Integer> node = new Node<>(5);
 
         linkedList.addAtLast(1);
         linkedList.addAtLast(2);
@@ -429,7 +429,7 @@ class SinglyLinkedListTest {
         linkedList.addAtLast(7);
         linkedList.addAtLast(8);
         linkedList.addAtLast(9);
-        linkedList.addAtLast(new SinglyLinkedList.Node<>(10, node));
+        linkedList.addAtLast(new Node<>(10, node));
 
         Assertions.assertThat(linkedList.getStartInCycle()).isEqualTo(5);
     }
@@ -438,8 +438,8 @@ class SinglyLinkedListTest {
     void getIntersection() {
         init();
 
-        SinglyLinkedList<Integer> list1 = new SinglyLinkedList<>();
-        SinglyLinkedList<Integer> list2 = new SinglyLinkedList<>();
+        SinglyLinkedList<Integer, Node<Integer>, SinglyLinkedList> list1 = new SinglyLinkedList<>();
+        SinglyLinkedList<Integer, Node<Integer>, SinglyLinkedList> list2 = new SinglyLinkedList<>();
 
         list1.addAtLast(11);
         list1.addAtLast(12);
@@ -462,6 +462,17 @@ class SinglyLinkedListTest {
 
     @Test
     void reverse() {
+        init();
+        linkedList.reverse();
+
+        List<Integer> integers = linkedList.getAll();
+        for (int i = 0; i < integers.size(); i++) {
+            Assertions.assertThat(integers.get(i)).isEqualTo(10 - i);
+        }
+
+        Assertions.assertThat(linkedList.getHead()).isEqualTo(10);
+        Assertions.assertThat(linkedList.getTail()).isEqualTo(1);
+        Assertions.assertThat(linkedList.getSize()).isEqualTo(10);
     }
 
     @Test
@@ -470,18 +481,38 @@ class SinglyLinkedListTest {
 
     @Test
     void deduplicate() {
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(3);
+
+        linkedList.deduplicate();
+
+        Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
+        Assertions.assertThat(linkedList.getTail()).isEqualTo(3);
+        Assertions.assertThat(linkedList.getSize()).isEqualTo(3);
     }
 
     @Test
     void isPalindrome() {
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(3);
+        linkedList.addAtLast(3);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(1);
+
+        Assertions.assertThat(linkedList.isPalindrome(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1 - o2;
+            }
+        })).isTrue();
     }
 
     @Test
     void sum() {
     }
-
-    @Test
-    void dump() {
-    }
-
 }

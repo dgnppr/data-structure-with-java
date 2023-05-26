@@ -195,14 +195,36 @@ class DoublyLinkedListTest {
     @Test
     void removeMiddle() {
         init();
+        linkedList.removeMiddle();
+        Assertions.assertThat(linkedList.getAll()).doesNotContain(6);
+        Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
+        Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
+        Assertions.assertThat(linkedList.getSize()).isEqualTo(9);
     }
 
     @Test
     void removeLast() {
+        init();
+        linkedList.removeLast();
+
+        List<Integer> integers = linkedList.getAll();
+        for (int i = 0; i < integers.size(); i++) {
+            Assertions.assertThat(integers.get(i)).isEqualTo(i + 1);
+        }
+
+        Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
+        Assertions.assertThat(linkedList.getTail()).isEqualTo(9);
+        Assertions.assertThat(linkedList.getSize()).isEqualTo(9);
     }
 
     @Test
     void removeAt() {
+        init();
+        linkedList.removeAt(5);
+        Assertions.assertThat(linkedList.getAll()).doesNotContain(6);
+        Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
+        Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
+        Assertions.assertThat(linkedList.getSize()).isEqualTo(9);
     }
 
     @Test

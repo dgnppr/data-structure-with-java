@@ -89,7 +89,7 @@ public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList
                 }
 
                 pre = cur;
-                cur = (BiNode<E>) cur.nxt;
+                cur = cur.nxt;
                 cnt++;
             }
         }
@@ -122,7 +122,7 @@ public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList
                 }
 
                 pre = cur;
-                cur = (BiNode<E>) cur.nxt;
+                cur = cur.nxt;
                 cnt++;
             }
         }
@@ -153,7 +153,7 @@ public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList
             head = tail = null;
         } else {
             BiNode<E> ptr = this.head;
-            head = (BiNode<E>) ptr.nxt;
+            head = ptr.nxt;
             ptr.prev = null;
         }
 
@@ -170,24 +170,53 @@ public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList
         if (isHeadOnly()) {
             removeFirst();
         } else {
-            tail = null;
-            Node<E> ptr = head;
-            while (ptr.nxt != null) {
-                ptr = ptr.nxt;
-            }
-            tail = ptr;
+            this.tail = this.tail.prev;
+            this.tail.nxt = null;
             size--;
         }
     }
 
     @Override
     public void removeMiddle() {
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+        }
 
+        removeAt(this.size / 2);
     }
 
     @Override
     public void removeAt(int idx) {
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+            return;
+        }
 
+        if (idx < 0 || idx > this.size) {
+            System.out.println("Invalid Index");
+            return;
+        }
+
+        if (idx == 0) {
+            removeFirst();
+        } else if (idx == this.size - 1) {
+            removeLast();
+        } else {
+            int cnt = 0;
+            BiNode<E> cur = this.head;
+            BiNode<E> pre = this.head;
+            while (cur != null) {
+                if (cnt == idx) {
+                    pre.nxt = cur.nxt;
+                    if (cur.nxt != null) cur.nxt.prev = pre;
+                    size--;
+                    return;
+                }
+                pre = cur;
+                cur = cur.nxt;
+                cnt++;
+            }
+        }
     }
 
     @Override

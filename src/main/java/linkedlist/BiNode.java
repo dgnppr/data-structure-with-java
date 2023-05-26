@@ -2,14 +2,16 @@ package linkedlist;
 
 public class BiNode<E> extends Node<E> {
 
-    public Node<E> prev;
+    public BiNode<E> nxt;
+    public BiNode<E> prev;
 
-    public BiNode(E data, Node<E> nxt, Node<E> prev) {
-        super(data, nxt);
+    public BiNode(E data, BiNode<E> nxt, BiNode<E> prev) {
+        super(data);
+        this.nxt = nxt;
         this.prev = prev;
     }
 
-    public BiNode(E data, Node<E> prev) {
+    public BiNode(E data, BiNode<E> prev) {
         super(data);
         this.prev = prev;
     }

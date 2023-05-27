@@ -10,12 +10,7 @@ public class BiNode<E> extends Node<E> {
         this.nxt = nxt;
         this.prev = prev;
     }
-
-    public BiNode(E data, BiNode<E> prev) {
-        super(data);
-        this.prev = prev;
-    }
-
+    
     public BiNode(E data) {
         super(data);
         this.prev = null;

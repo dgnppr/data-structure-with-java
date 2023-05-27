@@ -229,14 +229,45 @@ class DoublyLinkedListTest {
 
     @Test
     void remove() {
+        BiNode<Integer> node = new BiNode<>(5);
+
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(3);
+        linkedList.addAtLast(4);
+        linkedList.addAtLast(node);
+        linkedList.addAtLast(6);
+        linkedList.addAtLast(7);
+        linkedList.addAtLast(8);
+        linkedList.addAtLast(9);
+        linkedList.addAtLast(10);
+
+        linkedList.remove(node);
+
+        Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
+        Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
+        Assertions.assertThat(linkedList.getSize()).isEqualTo(9);
     }
 
     @Test
     void removeIfDataIsEven() {
+        init();
+
+        linkedList.removeIfDataIsEven();
+        List<Integer> integers = linkedList.getAll();
+        Assertions.assertThat(integers).hasSize(5);
+        Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
+        Assertions.assertThat(linkedList.getTail()).isEqualTo(9);
+        Assertions.assertThat(linkedList.getSize()).isEqualTo(5);
     }
 
     @Test
     void clear() {
+        init();
+        linkedList.clear();
+        Assertions.assertThat(linkedList.getAll()).isEmpty();
+        Assertions.assertThat(linkedList.isEmpty()).isTrue();
+        Assertions.assertThat(linkedList.getSize()).isZero();
     }
 
     @Test

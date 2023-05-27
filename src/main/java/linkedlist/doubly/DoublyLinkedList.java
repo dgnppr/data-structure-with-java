@@ -221,16 +221,83 @@ public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList
 
     @Override
     public void remove(K p) {
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+            return;
+        }
 
+        if (head == p) {
+            removeFirst();
+        } else if (tail == p) {
+            removeLast();
+        } else {
+            BiNode<E> cur = head;
+            BiNode<E> pre = head;
+
+            while (cur.nxt != p) {
+                pre = cur;
+                cur = cur.nxt;
+                if (cur == null) {
+                    return;
+                }
+            }
+
+            pre.nxt = cur.nxt;
+            cur.prev = pre;
+            size--;
+        }
     }
 
     @Override
     public void removeIfDataIsEven() {
 
+        if (!(head.data instanceof Integer)) {
+            System.out.println("Not valid Generic");
+            return;
+        }
+
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+            return;
+        }
+
+        BiNode<E> cur = head;
+        BiNode<E> pre = null;
+
+        while (cur != null) {
+            if ((Integer) cur.data % 2 == 0) {
+                if (pre == null) {
+                    if (cur.nxt != null) {
+                        head = cur.nxt;
+                        head.prev = null;
+                    } else {
+                        head = tail = null;
+                    }
+                } else {
+                    pre.nxt = cur.nxt;
+                    if (cur.nxt != null) {
+                        cur.nxt.prev = pre;
+                    } else {
+                        tail = pre;
+                    }
+                }
+                size--;
+            } else {
+                pre = cur;
+            }
+            cur = cur.nxt;
+        }
     }
 
     @Override
     public void clear() {
+
+        BiNode<E> ptr = this.head;
+
+        while (ptr != null) {
+            removeFirst();
+            ptr = ptr.nxt;
+        }
 
     }
 
@@ -256,7 +323,7 @@ public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList
 
     @Override
     public List<E> getAll() {
-        Node<E> ptr = head;
+        BiNode<E> ptr = this.head;
         List<E> rst = new ArrayList<>();
 
         while (ptr != null) {
@@ -336,6 +403,6 @@ public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList
 
     @Override
     public int getSize() {
-        return super.getSize();
+        return this.size;
     }
 }

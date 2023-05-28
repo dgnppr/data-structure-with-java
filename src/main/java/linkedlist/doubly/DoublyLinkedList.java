@@ -18,7 +18,7 @@ public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList
         if (isEmpty()) {
             this.head = this.tail = new BiNode<>(data, null, null);
         } else {
-            this.head = new BiNode<>(data, this.head, this.tail.prev);
+            this.head = new BiNode<>(data, this.head, null);
         }
         size++;
     }
@@ -303,22 +303,48 @@ public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList
 
     @Override
     public boolean contains(E data, Comparator<? super E> c) {
+        if (isEmpty()) return false;
+
+        BiNode<E> ptr = this.head;
+
+        while (ptr != null) {
+            if (c.compare(ptr.data, data) == 0) {
+                return true;
+            }
+            ptr = ptr.nxt;
+        }
+
         return false;
     }
 
     @Override
     public E getAt(int index) {
+        if (isEmpty() || index < 0 || index >= this.size) return null;
+
+        BiNode<E> ptr = this.head;
+        int cnt = 0;
+
+        while (ptr != null) {
+            if (cnt == index) {
+                return ptr.data;
+            }
+            ptr = ptr.nxt;
+            cnt++;
+        }
+
         return null;
     }
 
     @Override
     public E getAtFromBack(int index) {
-        return null;
+        if (isEmpty() || index < 0 || index >= size) return null;
+        return getAt(size - index - 1);
     }
 
     @Override
     public E getMiddle() {
-        return null;
+        if (isEmpty()) return null;
+        else return getAt(size / 2);
     }
 
     @Override

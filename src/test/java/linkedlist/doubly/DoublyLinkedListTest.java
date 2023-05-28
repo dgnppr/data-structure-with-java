@@ -5,11 +5,18 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Comparator;
 import java.util.List;
 
 class DoublyLinkedListTest {
 
     DoublyLinkedList<Integer, BiNode<Integer>, DoublyLinkedList> linkedList;
+    Comparator<Integer> c = new Comparator<>() {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return o1 - o2;
+        }
+    };
 
     @BeforeEach
     void setUp() {
@@ -272,22 +279,36 @@ class DoublyLinkedListTest {
 
     @Test
     void contains() {
+        init();
+
+        Assertions.assertThat(linkedList.contains(0, c)).isFalse();
+        Assertions.assertThat(linkedList.contains(5, c)).isTrue();
+        Assertions.assertThat(linkedList.contains(10, c)).isTrue();
+        Assertions.assertThat(linkedList.contains(11, c)).isFalse();
     }
 
     @Test
     void getAt() {
+        init();
+        Assertions.assertThat(linkedList.getAt(0)).isEqualTo(1);
+        Assertions.assertThat(linkedList.getAt(5)).isEqualTo(6);
+        Assertions.assertThat(linkedList.getAt(9)).isEqualTo(10);
+        Assertions.assertThat(linkedList.getAt(10)).isNull();
     }
 
     @Test
     void getAtFromBack() {
+        init();
+        Assertions.assertThat(linkedList.getAtFromBack(0)).isEqualTo(10);
+        Assertions.assertThat(linkedList.getAtFromBack(5)).isEqualTo(5);
+        Assertions.assertThat(linkedList.getAtFromBack(9)).isEqualTo(1);
+        Assertions.assertThat(linkedList.getAtFromBack(10)).isNull();
     }
 
     @Test
     void getMiddle() {
-    }
-
-    @Test
-    void getAll() {
+        init();
+        Assertions.assertThat(linkedList.getMiddle()).isEqualTo(6);
     }
 
     @Test

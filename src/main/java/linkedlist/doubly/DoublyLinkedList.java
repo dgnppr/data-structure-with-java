@@ -362,7 +362,28 @@ public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList
 
     @Override
     public E getStartInCycle() {
-        return null;
+        if (isEmpty() || isHeadOnly()) return null;
+
+        BiNode<E> fast = this.head;
+        BiNode<E> slow = this.head;
+
+        while (fast != null && fast.nxt != null) {
+            fast = fast.nxt.nxt;
+            slow = slow.nxt;
+
+            if (fast == slow) {
+                break;
+            }
+        }
+        
+        slow = this.head;
+
+        while (slow != fast) {
+            slow = slow.nxt;
+            fast = fast.nxt;
+        }
+
+        return slow.data;
     }
 
     @Override

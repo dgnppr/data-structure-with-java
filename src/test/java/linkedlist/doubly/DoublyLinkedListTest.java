@@ -313,6 +313,21 @@ class DoublyLinkedListTest {
 
     @Test
     void getStartInCycle() {
+        BiNode<Integer> node = new BiNode<>(2);
+
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(3);
+        linkedList.addAtLast(4);
+        linkedList.addAtLast(5);
+        linkedList.addAtLast(6);
+        linkedList.addAtLast(node);
+        linkedList.addAtLast(8);
+        linkedList.addAtLast(9);
+        linkedList.addAtLast(10);
+        linkedList.addAtLast(node);
+
+        Assertions.assertThat(linkedList.getStartInCycle()).isEqualTo(node.data);
     }
 
     @Test

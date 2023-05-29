@@ -487,7 +487,7 @@ public class SinglyLinkedList<E, K extends Node<E>, L extends SinglyLinkedList> 
     }
 
     @Override
-    public K sum(K p) {
+    public L sum(K p) {
         return null;
     }
 

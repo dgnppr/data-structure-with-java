@@ -67,7 +67,7 @@ public abstract class LinkedList<E, K extends Node<E>, L extends LinkedList> {
 
     public abstract boolean isPalindrome(Comparator<? super E> c);
 
-    public abstract K sum(K p);
+    public abstract L sum(K p);
 
     public abstract K reverse(K node);
 

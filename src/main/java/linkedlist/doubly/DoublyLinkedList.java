@@ -2,11 +2,8 @@ package linkedlist.doubly;
 
 import linkedlist.BiNode;
 import linkedlist.LinkedList;
-import linkedlist.Node;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList> extends LinkedList<E, K, L> {
 
@@ -375,7 +372,7 @@ public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList
                 break;
             }
         }
-        
+
         slow = this.head;
 
         while (slow != fast) {
@@ -416,32 +413,133 @@ public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList
 
     @Override
     public void reverse() {
+        if (isEmpty() || isHeadOnly()) return;
 
+        BiNode<E> cur = this.head;
+        BiNode<E> pre = null;
+
+        while (cur != null) {
+            BiNode<E> nxt = cur.nxt;
+
+            if (pre == null) tail = cur;
+            cur.nxt = pre;
+            cur.prev = nxt;
+
+            if (nxt == null) head = cur;
+            pre = cur;
+            cur = nxt;
+        }
     }
 
     @Override
     public void deduplicate() {
+        if (isEmpty() || isHeadOnly()) return;
+        Set<E> vis = new HashSet<>();
 
+        BiNode<E> ptr = this.head;
+
+        while (ptr != null) {
+            if (vis.contains(ptr.data)) {
+                if (ptr == tail) {
+                    removeLast();
+                } else {
+                    ptr.prev.nxt = ptr.nxt;
+                    ptr.nxt.prev = ptr.prev;
+                    size--;
+                }
+            } else {
+                vis.add(ptr.data);
+            }
+
+            ptr = ptr.nxt;
+        }
     }
 
     @Override
     public boolean isPalindrome(Comparator<? super E> c) {
-        return false;
+        if (isEmpty()) return false;
+
+        if (isHeadOnly()) return true;
+
+        int cnt = 0;
+        BiNode<E> ptr = this.head;
+
+        while (ptr != null) {
+            if (cnt++ == this.size / 2) {
+                break;
+            }
+            ptr = ptr.nxt;
+        }
+
+        BiNode<E> ptr1 = this.head;
+        BiNode<E> ptr2 = reverse((K) ptr);
+
+        while (ptr1 != null && ptr2 != null) {
+            if (c.compare(ptr1.data, ptr2.data) != 0) return false;
+            ptr1 = ptr1.nxt;
+            ptr2 = ptr2.nxt;
+        }
+
+        return true;
     }
 
     @Override
-    public K sum(K p) {
-        return null;
+    public L sum(K p) {
+        if (!(this.head.data instanceof Integer) || !(p.data instanceof Integer)) return null;
+
+        DoublyLinkedList<Integer, BiNode<Integer>, L> result = new DoublyLinkedList<>();
+
+        BiNode<E> ptr1 = this.head;
+        BiNode<E> ptr2 = p;
+
+        int extra = 0;
+        while (ptr1 != null && ptr2 != null) {
+            int sum = (Integer) ptr1.data + (Integer) ptr2.data + extra;
+            result.addAtLast(sum % 10);
+            extra = sum / 10;
+            ptr1 = ptr1.nxt;
+            ptr2 = ptr2.nxt;
+        }
+
+        while (ptr1 != null) {
+            int sum = (Integer) ptr1.data + extra;
+            result.addAtLast(sum % 10);
+            extra = sum / 10;
+            ptr1 = ptr1.nxt;
+        }
+
+        while (ptr2 != null) {
+            int sum = (Integer) ptr2.data + extra;
+            result.addAtLast(sum % 10);
+            extra = sum / 10;
+            ptr2 = ptr2.nxt;
+        }
+
+        return (L) result;
     }
 
     @Override
     public K reverse(K node) {
-        return null;
+
+        BiNode<E> cur = node;
+        BiNode<E> pre = null;
+
+        while (cur != null) {
+            BiNode<E> nxt = cur.nxt;
+
+            cur.nxt = pre;
+            cur.prev = nxt;
+
+            pre = cur;
+            cur = nxt;
+        }
+
+        return (K) pre;
     }
 
     @Override
     public void dump() {
-        Node<E> ptr = head;
+        BiNode<E> ptr = this.head;
 
         StringBuilder sb = new StringBuilder();
         while (ptr != null) {

@@ -313,7 +313,8 @@ class DoublyLinkedListTest {
 
     @Test
     void getStartInCycle() {
-        BiNode<Integer> node = new BiNode<>(2);
+        BiNode<Integer> cycleStartNode = new BiNode<>(2);
+        BiNode<Integer> cycleLastNode = new BiNode<>(10);
 
         linkedList.addAtLast(1);
         linkedList.addAtLast(2);
@@ -321,13 +322,13 @@ class DoublyLinkedListTest {
         linkedList.addAtLast(4);
         linkedList.addAtLast(5);
         linkedList.addAtLast(6);
-        linkedList.addAtLast(node);
+        linkedList.addAtLast(cycleStartNode);
         linkedList.addAtLast(8);
         linkedList.addAtLast(9);
-        linkedList.addAtLast(10);
-        linkedList.addAtLast(node);
+        linkedList.addAtLast(cycleLastNode);
+        cycleLastNode.nxt = cycleStartNode;
 
-        Assertions.assertThat(linkedList.getStartInCycle()).isEqualTo(node.data);
+        Assertions.assertThat(linkedList.getStartInCycle()).isEqualTo(cycleStartNode.data);
     }
 
     @Test
@@ -346,34 +347,87 @@ class DoublyLinkedListTest {
         list2.addAtLast(8);
         list2.addAtLast(9);
 
-
-        list1.addAtLast(linkedList.head);
-        list2.addAtLast(linkedList.head);
+        list1.append(linkedList);
+        list2.append(linkedList);
 
         Assertions.assertThat(list1.getIntersection(list2)).isEqualTo(1);
     }
 
     @Test
     void reverse() {
+        init();
+        linkedList.reverse();
+
+        List<Integer> integers = linkedList.getAll();
+        for (int i = 0; i < integers.size(); i++) {
+            Assertions.assertThat(integers.get(i)).isEqualTo(10 - i);
+        }
+
+        Assertions.assertThat(linkedList.getSize()).isEqualTo(10);
+        Assertions.assertThat(linkedList.getHead()).isEqualTo(10);
+        Assertions.assertThat(linkedList.getTail()).isEqualTo(1);
     }
 
     @Test
     void deduplicate() {
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(3);
+        linkedList.addAtLast(4);
+        linkedList.addAtLast(4);
+        linkedList.addAtLast(5);
+        linkedList.addAtLast(4);
+
+        linkedList.deduplicate();
+
+        List<Integer> integers = linkedList.getAll();
+        for (int i = 0; i < integers.size(); i++) {
+            Assertions.assertThat(integers.get(i)).isEqualTo(i + 1);
+        }
+
+        Assertions.assertThat(linkedList.getSize()).isEqualTo(5);
+        Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
+        Assertions.assertThat(linkedList.getTail()).isEqualTo(5);
     }
 
     @Test
     void isPalindrome() {
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(3);
+        linkedList.addAtLast(3);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(1);
+        Assertions.assertThat(linkedList.isPalindrome(c)).isTrue();
+
+        linkedList.addAtLast(1);
+        Assertions.assertThat(linkedList.isPalindrome(c)).isFalse();
+
     }
 
     @Test
     void sum() {
-    }
 
-    @Test
-    void testReverse() {
-    }
+        DoublyLinkedList<Integer, BiNode<Integer>, DoublyLinkedList> list1 = new DoublyLinkedList();
 
-    @Test
-    void dump() {
+        linkedList.addAtLast(5);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(1);
+
+        list1.addAtLast(7);
+        list1.addAtLast(8);
+        list1.addAtLast(9);
+        list1.addAtLast(2);
+
+        DoublyLinkedList sum = linkedList.sum(list1.head);
+
+        sum.dump();
     }
 }

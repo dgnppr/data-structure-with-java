@@ -317,6 +317,25 @@ class DoublyLinkedListTest {
 
     @Test
     void getIntersection() {
+        init();
+
+        DoublyLinkedList<Integer, BiNode<Integer>, DoublyLinkedList> list1 = new DoublyLinkedList();
+        DoublyLinkedList<Integer, BiNode<Integer>, DoublyLinkedList> list2 = new DoublyLinkedList();
+
+        list1.addAtLast(12);
+        list1.addAtLast(5);
+        list1.addAtLast(4);
+        list1.addAtLast(3);
+
+        list2.addAtLast(7);
+        list2.addAtLast(8);
+        list2.addAtLast(9);
+
+
+        list1.addAtLast(linkedList.head);
+        list2.addAtLast(linkedList.head);
+
+        Assertions.assertThat(list1.getIntersection(list2)).isEqualTo(1);
     }
 
     @Test

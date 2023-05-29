@@ -367,7 +367,30 @@ public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList
 
     @Override
     public E getIntersection(L other) {
-        return null;
+
+        int dist = this.size - other.size;
+
+        BiNode<E> ptr1 = this.head;
+        BiNode<E> ptr2 = other.head;
+
+        if (dist > 0) {
+            int cnt = dist;
+            while (cnt-- > 0) {
+                ptr1 = ptr1.nxt;
+            }
+        } else if (dist < 0) {
+            int cnt = -dist;
+            while (cnt-- > 0) {
+                ptr2 = ptr2.nxt;
+            }
+        }
+
+        while (ptr1 != ptr2) {
+            ptr1 = ptr1.nxt;
+            ptr2 = ptr2.nxt;
+        }
+
+        return ptr1.data;
     }
 
     @Override

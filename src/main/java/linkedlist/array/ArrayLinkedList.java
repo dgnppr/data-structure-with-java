@@ -2,13 +2,14 @@ package linkedlist.array;
 
 import linkedlist.ArrNode;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class ArrayLinkedList<E> {
 
     private static final int NULL = -1;
-    private final int head;
+    private int head;
     private int dhead;
     private ArrNode<E>[] arr;
     private int size;
@@ -20,7 +21,7 @@ public class ArrayLinkedList<E> {
         try {
             this.arr = new ArrNode[capacity];
             for (int i = 0; i < arr.length; i++) {
-                arr[i] = new ArrNode<E>();
+                arr[i] = new ArrNode<>();
             }
             this.capacity = capacity;
         } catch (OutOfMemoryError error) {
@@ -29,34 +30,53 @@ public class ArrayLinkedList<E> {
     }
 
     private int getInsertIdx() {
-        if (isNotDeleted()) {
-            if (this.size < this.capacity) return this.size++;
-            else return NULL;
+        if (hasFreeIdx()) {
+            int ret = this.dhead;
+            this.dhead = arr[ret].dnxt;
+            return ret;
         } else {
-            int delete = this.dhead;
-            this.dhead = arr[delete].dnxt;
-            return delete;
+            if (isFull()) return NULL;
+            else return this.size++;
         }
     }
 
     private void deleteIdx(int idx) {
-        if (isNotDeleted()) {
+        if (hasFreeIdx()) {
+            int nxt = this.dhead;
+            this.dhead = idx;
+            arr[idx].dnxt = nxt;
+        } else {
             this.dhead = idx;
             arr[idx].dnxt = NULL;
-        } else {
-            int delete = this.dhead;
-            this.dhead = idx;
-            arr[delete].dnxt = delete;
         }
     }
 
     // 삽입
     public void addAtFirst(E data) {
+        if (isFull()) return;
 
+        int nxt = this.head;
+        int idx = getInsertIdx();
+
+        this.head = idx;
+        arr[head].init(data, nxt);
     }
 
     public void addAtLast(E data) {
+        if (isFull()) return;
 
+        if (isEmpty()) {
+            addAtFirst(data);
+        } else {
+            int ptr = this.head;
+            while (arr[ptr].nxt != NULL) {
+                ptr = arr[ptr].nxt;
+            }
+
+            int idx = getInsertIdx();
+            arr[ptr].nxt = idx;
+            arr[idx].init(data, NULL);
+        }
     }
 
     public void addAt(int idx, E data) {
@@ -106,7 +126,16 @@ public class ArrayLinkedList<E> {
     }
 
     public List<E> getAll() {
-        return null;
+        List<E> result = new ArrayList<>();
+
+        int ptr = this.head;
+
+        while (ptr != NULL) {
+            result.add(arr[ptr].data);
+            ptr = arr[ptr].nxt;
+        }
+
+        return result;
     }
 
     public E getStartInCycle() {
@@ -132,6 +161,9 @@ public class ArrayLinkedList<E> {
 
     }
 
+    private boolean isFull() {
+        return this.size >= this.capacity;
+    }
 
     private boolean isEmpty() {
         return this.head == NULL;
@@ -141,7 +173,7 @@ public class ArrayLinkedList<E> {
         return arr[this.head].nxt == NULL;
     }
 
-    private boolean isNotDeleted() {
-        return this.dhead == NULL;
+    private boolean hasFreeIdx() {
+        return this.dhead != NULL;
     }
 }

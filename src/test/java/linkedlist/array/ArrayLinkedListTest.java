@@ -57,6 +57,23 @@ class ArrayLinkedListTest {
 
     @Test
     void addAt() {
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(3);
+        linkedList.addAtLast(4);
+        linkedList.addAtLast(6);
+        linkedList.addAtLast(7);
+        linkedList.addAtLast(8);
+        linkedList.addAtLast(9);
+        linkedList.addAtLast(10);
+
+        linkedList.addAt(4, 5);
+
+        List<Integer> integers = linkedList.getAll();
+
+        for (int i = 0; i < integers.size(); i++) {
+            Assertions.assertThat(integers.get(i)).isEqualTo(i + 1);
+        }
     }
 
     @Test

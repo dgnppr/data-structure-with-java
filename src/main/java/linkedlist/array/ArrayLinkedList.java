@@ -80,6 +80,27 @@ public class ArrayLinkedList<E> {
     }
 
     public void addAt(int idx, E data) {
+        if (!(0 <= idx && idx < this.size) || isFull()) return;
+
+        if (idx == 0) {
+            addAtFirst(data);
+        } else {
+            int cur = this.head;
+            int pre = this.head;
+            int cnt = 0;
+
+            while (cur != NULL) {
+                if (cnt == idx) {
+                    int insertIdx = getInsertIdx();
+                    arr[insertIdx].init(data, arr[pre].nxt);
+                    arr[pre].nxt = insertIdx;
+                    return;
+                }
+                pre = cur;
+                cur = arr[cur].nxt;
+                cnt++;
+            }
+        }
 
     }
 

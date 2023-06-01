@@ -150,32 +150,114 @@ public class ArrayLinkedList<E> {
     }
 
     public void removeAt(int idx) {
+        if (isEmpty() || idx < 0 || idx >= this.capacity) return;
 
+        int cur = this.head;
+        int pre = this.head;
+        int cnt = 0;
+
+        while (cur != NULL) {
+            if (cnt == idx) {
+                break;
+            }
+            pre = cur;
+            cur = arr[cur].nxt;
+            cnt++;
+        }
+
+        arr[pre].nxt = arr[cur].nxt;
+        delete(cur);
     }
 
     public void removeIfDataIsEven() {
+        if (isEmpty() || !(arr[head].data instanceof Integer)) return;
+
+        int cur = this.head;
+        int pre = NULL;
+
+        while (cur != NULL) {
+            if ((int) arr[cur].data % 2 == 0) {
+                if (pre == NULL) {
+                    this.head = arr[head].nxt;
+                } else {
+                    arr[pre].nxt = arr[cur].nxt;
+                }
+                delete(cur);
+            } else {
+                pre = cur;
+            }
+            cur = arr[cur].nxt;
+        }
 
     }
 
     public void clear() {
+        if (isEmpty()) return;
+
+        int ptr = this.head;
+        while (ptr != NULL) {
+            ptr = arr[ptr].nxt;
+            removeFirst();
+        }
 
     }
 
     // 조회
     public boolean contains(E data, Comparator<? super E> c) {
+        if (isEmpty()) return false;
+
+        int ptr = this.head;
+
+        while (ptr != NULL) {
+            if (c.compare(arr[ptr].data, data) == 0) {
+                return true;
+            }
+            ptr = arr[ptr].nxt;
+        }
+
         return false;
     }
 
     public E getAt(int index) {
+        if (isEmpty() || index < 0 || index > this.capacity) return null;
+
+        int ptr = this.head;
+        int cnt = 0;
+        while (ptr != NULL) {
+            if (cnt == index) return arr[ptr].data;
+            ptr = arr[ptr].nxt;
+            cnt++;
+        }
+
         return null;
     }
 
     public E getAtFromBack(int index) {
-        return null;
+        if (isEmpty() || index < 0 || index > this.capacity) return null;
+
+        int ptr = this.head;
+        int total = 0;
+
+        while (ptr != NULL) {
+            ptr = arr[ptr].nxt;
+            total++;
+        }
+
+        return getAt(total - index - 1);
     }
 
     public E getMiddle() {
-        return null;
+        if (isEmpty()) return null;
+
+        int fast = this.head;
+        int slow = this.head;
+
+        while (fast != NULL && arr[fast].nxt != NULL) {
+            fast = arr[arr[fast].nxt].nxt;
+            slow = arr[slow].nxt;
+        }
+
+        return arr[slow].data;
     }
 
     public List<E> getAll() {
@@ -209,13 +291,23 @@ public class ArrayLinkedList<E> {
         return false;
     }
 
-    // 출력
     public void dump() {
+        if (isEmpty()) {
+            System.out.println("LinkedList is Empty");
+            return;
+        }
 
+        int ptr = this.head;
+        StringBuilder rst = new StringBuilder();
+        while (ptr != NULL) {
+            rst.append(arr[ptr].data).append(" ");
+            ptr = arr[ptr].nxt;
+        }
+        System.out.println(rst);
     }
 
     private boolean isFull() {
-        return this.size >= this.capacity;
+        return this.size >= this.capacity && !hasFreeIdx();
     }
 
     private boolean isEmpty() {

@@ -40,7 +40,7 @@ public class ArrayLinkedList<E> {
         }
     }
 
-    private void deleteIdx(int idx) {
+    private void delete(int idx) {
         if (hasFreeIdx()) {
             int nxt = this.dhead;
             this.dhead = idx;
@@ -106,15 +106,47 @@ public class ArrayLinkedList<E> {
 
     // 삭제
     public void removeFirst() {
+        if (isEmpty()) return;
 
-    }
-
-    public void removeMiddle() {
-
+        int idx = this.head;
+        this.head = arr[idx].nxt;
+        delete(idx);
     }
 
     public void removeLast() {
+        if (isEmpty()) return;
 
+        if (isHeadOnly()) {
+            removeFirst();
+        } else {
+            int cur = this.head;
+            int pre = this.head;
+
+            while (arr[cur].nxt != NULL) {
+                pre = cur;
+                cur = arr[cur].nxt;
+            }
+            arr[pre].nxt = NULL;
+            delete(cur);
+        }
+    }
+
+    public void removeMiddle() {
+        if (isEmpty()) return;
+        if (isHeadOnly()) removeFirst();
+
+        int fast = this.head;
+        int slow = this.head;
+        int pre = this.head;
+
+        while (fast != NULL && arr[fast].nxt != NULL) {
+            fast = arr[arr[fast].nxt].nxt;
+            pre = slow;
+            slow = arr[slow].nxt;
+        }
+
+        arr[pre].nxt = arr[slow].nxt;
+        delete(slow);
     }
 
     public void removeAt(int idx) {

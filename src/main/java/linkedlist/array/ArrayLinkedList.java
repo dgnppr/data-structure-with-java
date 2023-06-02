@@ -2,9 +2,7 @@ package linkedlist.array;
 
 import linkedlist.ArrNode;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class ArrayLinkedList<E> {
 
@@ -273,22 +271,71 @@ public class ArrayLinkedList<E> {
         return result;
     }
 
-    public E getStartInCycle() {
-        return null;
-    }
-
     // 수정
     public void reverse() {
+        if (isEmpty()) return;
 
+        int cur = this.head;
+        int pre = NULL;
+
+        while (cur != NULL) {
+            int nxt = arr[cur].nxt;
+            arr[cur].nxt = pre;
+            pre = cur;
+            if (nxt == NULL) this.head = cur;
+            cur = nxt;
+        }
     }
 
     public void deduplicate() {
+        if (isEmpty()) return;
 
+        Set<E> vis = new HashSet<>();
+        int cur = this.head;
+        int pre = this.head;
+
+        while (cur != NULL) {
+            if (vis.contains(arr[cur].data)) {
+                arr[pre].nxt = arr[cur].nxt;
+                delete(cur);
+            } else {
+                vis.add(arr[cur].data);
+                pre = cur;
+            }
+            cur = arr[cur].nxt;
+        }
     }
 
     // 문제
     public boolean isPalindrome(Comparator<? super E> c) {
-        return false;
+        if (isEmpty()) return false;
+        if (isHeadOnly()) return true;
+
+        int fast = this.head;
+        int slow = this.head;
+
+        while (fast != NULL && arr[fast].nxt != NULL) {
+            fast = arr[arr[fast].nxt].nxt;
+            slow = arr[slow].nxt;
+        }
+
+        int cur = slow;
+        int pre = NULL;
+        while (cur != NULL) {
+            int nxt = arr[cur].nxt;
+            arr[cur].nxt = pre;
+            pre = cur;
+            cur = nxt;
+        }
+
+        int ptr = this.head;
+        while (pre != NULL && ptr != NULL) {
+            if (c.compare(arr[pre].data, arr[ptr].data) != 0) return false;
+            ptr = arr[ptr].nxt;
+            pre = arr[pre].nxt;
+        }
+
+        return true;
     }
 
     public void dump() {

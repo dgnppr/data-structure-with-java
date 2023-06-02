@@ -182,18 +182,54 @@ class ArrayLinkedListTest {
     }
 
     @Test
-    void getStartInCycle() {
-    }
-
-    @Test
     void reverse() {
+        init();
+        linkedList.reverse();
+        List<Integer> integers = linkedList.getAll();
+        Assertions.assertThat(integers).hasSize(10);
+        for (int i = 0; i < integers.size(); i++) {
+            Assertions.assertThat(integers.get(i)).isEqualTo(10 - i);
+        }
     }
 
     @Test
     void deduplicate() {
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(3);
+        linkedList.addAtLast(4);
+        linkedList.addAtLast(4);
+        linkedList.addAtLast(5);
+        linkedList.addAtLast(4);
+
+        linkedList.deduplicate();
+
+        List<Integer> integers = linkedList.getAll();
+        for (int i = 0; i < 5; i++) {
+            Assertions.assertThat(integers.get(i)).isEqualTo(i + 1);
+        }
+
+        Assertions.assertThat(integers).hasSize(5);
     }
 
     @Test
     void isPalindrome() {
+        linkedList.addAtLast(1);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(3);
+        linkedList.addAtLast(3);
+        linkedList.addAtLast(2);
+        linkedList.addAtLast(1);
+        Assertions.assertThat(linkedList.isPalindrome(c)).isTrue();
+
+        linkedList.addAtLast(1);
+        Assertions.assertThat(linkedList.isPalindrome(c)).isFalse();
     }
 }

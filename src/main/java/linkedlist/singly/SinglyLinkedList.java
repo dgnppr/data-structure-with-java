@@ -1,7 +1,6 @@
 package linkedlist.singly;
 
 import linkedlist.LinkedList;
-import linkedlist.Node;
 
 import java.util.*;
 

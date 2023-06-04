@@ -1,4 +1,6 @@
-package linkedlist;
+package linkedlist.doubly;
+
+import linkedlist.singly.Node;
 
 public class BiNode<E> extends Node<E> {
 

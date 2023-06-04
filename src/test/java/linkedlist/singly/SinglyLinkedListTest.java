@@ -1,6 +1,5 @@
 package linkedlist.singly;
 
-import linkedlist.Node;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,4 +1,4 @@
-package linkedlist;
+package linkedlist.array;
 
 public class ArrNode<E> {
     public E data;

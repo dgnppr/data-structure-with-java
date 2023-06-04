@@ -1,5 +1,7 @@
 package linkedlist;
 
+import linkedlist.singly.Node;
+
 import java.util.Comparator;
 import java.util.List;
 

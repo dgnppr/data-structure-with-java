@@ -1,7 +1,5 @@
 package linkedlist.array;
 
-import linkedlist.ArrNode;
-
 import java.util.*;
 
 public class ArrayLinkedList<E> {

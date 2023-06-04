@@ -1,6 +1,5 @@
 package linkedlist.doubly;
 
-import linkedlist.BiNode;
 import linkedlist.LinkedList;
 
 import java.util.*;

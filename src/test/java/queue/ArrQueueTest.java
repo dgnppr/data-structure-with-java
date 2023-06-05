@@ -39,7 +39,7 @@ class ArrQueueTest {
         Assertions.assertThat(queue.front()).isEqualTo(1);
         Assertions.assertThat(queue.rear()).isEqualTo(5);
 
-        Assertions.assertThatThrownBy(() -> queue.enqueue(6)).isInstanceOf(ArrQueue.QueueFullException.class);
+        Assertions.assertThatThrownBy(() -> queue.enqueue(6)).isInstanceOf(QueueFullException.class);
     }
 
     @Test
@@ -63,10 +63,10 @@ class ArrQueueTest {
         Assertions.assertThat(queue.rear()).isEqualTo(5);
 
         Assertions.assertThat(queue.dequeue()).isEqualTo(5);
-        Assertions.assertThatThrownBy(() -> queue.front()).isInstanceOf(ArrQueue.QueueEmptyException.class);
-        Assertions.assertThatThrownBy(() -> queue.front()).isInstanceOf(ArrQueue.QueueEmptyException.class);
+        Assertions.assertThatThrownBy(() -> queue.front()).isInstanceOf(QueueEmptyException.class);
+        Assertions.assertThatThrownBy(() -> queue.front()).isInstanceOf(QueueEmptyException.class);
 
-        Assertions.assertThatThrownBy(() -> queue.dequeue()).isInstanceOf(ArrQueue.QueueEmptyException.class);
+        Assertions.assertThatThrownBy(() -> queue.dequeue()).isInstanceOf(QueueEmptyException.class);
 
         init();
         Assertions.assertThat(queue.front()).isEqualTo(1);

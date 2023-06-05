@@ -45,9 +45,4 @@ public class ArrStack<E> implements MyStack<E> {
         return this.ptr <= 0;
     }
 
-    static class StackFullException extends RuntimeException {
-    }
-
-    static class StackEmptyException extends RuntimeException {
-    }
 }

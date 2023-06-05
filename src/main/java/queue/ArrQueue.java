@@ -51,9 +51,4 @@ public class ArrQueue<E> implements MyQueue<E> {
         return this.front == this.rear % this.capacity && this.que[this.front] != null;
     }
 
-    static class QueueFullException extends RuntimeException {
-    }
-
-    static class QueueEmptyException extends RuntimeException {
-    }
 }

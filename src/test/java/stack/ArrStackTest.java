@@ -33,7 +33,7 @@ class ArrStackTest {
         Assertions.assertThat(stack.top()).isEqualTo(4);
         stack.push(5);
         Assertions.assertThat(stack.top()).isEqualTo(5);
-        Assertions.assertThatThrownBy(() -> stack.push(6)).isInstanceOf(ArrStack.StackFullException.class);
+        Assertions.assertThatThrownBy(() -> stack.push(6)).isInstanceOf(StackFullException.class);
     }
 
     @Test
@@ -52,8 +52,8 @@ class ArrStackTest {
         Assertions.assertThat(stack.top()).isEqualTo(1);
 
         Assertions.assertThat(stack.pop()).isEqualTo(1);
-        Assertions.assertThatThrownBy(() -> stack.top()).isInstanceOf(ArrStack.StackEmptyException.class);
-        Assertions.assertThatThrownBy(() -> stack.pop()).isInstanceOf(ArrStack.StackEmptyException.class);
+        Assertions.assertThatThrownBy(() -> stack.top()).isInstanceOf(StackEmptyException.class);
+        Assertions.assertThatThrownBy(() -> stack.pop()).isInstanceOf(StackEmptyException.class);
     }
 
     @Test
@@ -66,6 +66,6 @@ class ArrStackTest {
     void clear() {
         init();
         stack.clear();
-        Assertions.assertThatThrownBy(() -> stack.pop()).isInstanceOf(ArrStack.StackEmptyException.class);
+        Assertions.assertThatThrownBy(() -> stack.pop()).isInstanceOf(StackEmptyException.class);
     }
 }

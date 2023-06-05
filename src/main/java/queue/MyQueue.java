@@ -6,7 +6,9 @@ public interface MyQueue<E> {
 
     E dequeue();
 
-    E peek();
+    E front();
+
+    E rear();
 
     boolean isEmpty();
 

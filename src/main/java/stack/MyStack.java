@@ -5,7 +5,7 @@ public interface MyStack<E> {
 
     E pop();
 
-    E peek();
+    E top();
 
     void clear();
 

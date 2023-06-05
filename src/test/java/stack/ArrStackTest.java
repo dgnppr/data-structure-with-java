@@ -24,15 +24,15 @@ class ArrStackTest {
     @Test
     void push() {
         stack.push(1);
-        Assertions.assertThat(stack.peek()).isEqualTo(1);
+        Assertions.assertThat(stack.top()).isEqualTo(1);
         stack.push(2);
-        Assertions.assertThat(stack.peek()).isEqualTo(2);
+        Assertions.assertThat(stack.top()).isEqualTo(2);
         stack.push(3);
-        Assertions.assertThat(stack.peek()).isEqualTo(3);
+        Assertions.assertThat(stack.top()).isEqualTo(3);
         stack.push(4);
-        Assertions.assertThat(stack.peek()).isEqualTo(4);
+        Assertions.assertThat(stack.top()).isEqualTo(4);
         stack.push(5);
-        Assertions.assertThat(stack.peek()).isEqualTo(5);
+        Assertions.assertThat(stack.top()).isEqualTo(5);
         Assertions.assertThatThrownBy(() -> stack.push(6)).isInstanceOf(ArrStack.StackFullException.class);
     }
 
@@ -40,26 +40,26 @@ class ArrStackTest {
     void pop() {
         init();
         Assertions.assertThat(stack.pop()).isEqualTo(5);
-        Assertions.assertThat(stack.peek()).isEqualTo(4);
+        Assertions.assertThat(stack.top()).isEqualTo(4);
 
         Assertions.assertThat(stack.pop()).isEqualTo(4);
-        Assertions.assertThat(stack.peek()).isEqualTo(3);
+        Assertions.assertThat(stack.top()).isEqualTo(3);
 
         Assertions.assertThat(stack.pop()).isEqualTo(3);
-        Assertions.assertThat(stack.peek()).isEqualTo(2);
+        Assertions.assertThat(stack.top()).isEqualTo(2);
 
         Assertions.assertThat(stack.pop()).isEqualTo(2);
-        Assertions.assertThat(stack.peek()).isEqualTo(1);
+        Assertions.assertThat(stack.top()).isEqualTo(1);
 
         Assertions.assertThat(stack.pop()).isEqualTo(1);
-        Assertions.assertThatThrownBy(() -> stack.peek()).isInstanceOf(ArrStack.StackEmptyException.class);
+        Assertions.assertThatThrownBy(() -> stack.top()).isInstanceOf(ArrStack.StackEmptyException.class);
         Assertions.assertThatThrownBy(() -> stack.pop()).isInstanceOf(ArrStack.StackEmptyException.class);
     }
 
     @Test
     void peek() {
         init();
-        Assertions.assertThat(stack.peek()).isEqualTo(5);
+        Assertions.assertThat(stack.top()).isEqualTo(5);
     }
 
     @Test

@@ -25,7 +25,7 @@ public class ArrStack<E> implements MyStack<E> {
     }
 
     @Override
-    public E peek() {
+    public E top() {
         if (isEmpty()) throw new StackEmptyException();
         return (E) this.stk[this.ptr - 1];
     }

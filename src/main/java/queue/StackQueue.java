@@ -2,6 +2,7 @@ package queue;
 
 public class StackQueue<E> implements MyQueue<E> {
 
+
     @Override
     public void enqueue(E data) {
 
@@ -20,6 +21,11 @@ public class StackQueue<E> implements MyQueue<E> {
     @Override
     public E rear() {
         return null;
+    }
+
+    @Override
+    public int size() {
+        return 0;
     }
 
     @Override

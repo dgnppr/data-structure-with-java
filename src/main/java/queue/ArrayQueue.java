@@ -1,16 +1,17 @@
 package queue;
 
-public class ArrQueue<E> implements MyQueue<E> {
+public class ArrayQueue<E> implements MyQueue<E> {
 
     private final int capacity;
     private final Object[] que;
     private int front;
     private int rear;
+    private int size;
 
-    public ArrQueue(int capacity) {
+    public ArrayQueue(int capacity) {
         this.capacity = capacity;
         this.que = new Object[this.capacity];
-        this.front = this.rear = 0;
+        this.front = this.rear = this.size = 0;
     }
 
     @Override
@@ -18,6 +19,7 @@ public class ArrQueue<E> implements MyQueue<E> {
         if (isFull()) throw new QueueFullException();
         this.que[this.rear] = data;
         this.rear = (this.rear + 1) % this.capacity;
+        this.size++;
     }
 
     @Override
@@ -26,6 +28,7 @@ public class ArrQueue<E> implements MyQueue<E> {
         E data = (E) this.que[this.front];
         this.que[this.front] = null;
         this.front = (this.front + 1) % this.capacity;
+        this.size--;
         return data;
     }
 
@@ -42,13 +45,18 @@ public class ArrQueue<E> implements MyQueue<E> {
     }
 
     @Override
+    public int size() {
+        return this.size;
+    }
+
+    @Override
     public boolean isEmpty() {
-        return this.front == this.rear && this.que[this.front] == null;
+        return (this.front == this.rear) && (this.que[this.front] == null);
     }
 
     @Override
     public boolean isFull() {
-        return this.front == this.rear % this.capacity && this.que[this.front] != null;
+        return (this.front == this.rear) && (this.que[this.front] != null);
     }
 
 }

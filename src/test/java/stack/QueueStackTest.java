@@ -4,13 +4,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ArrStackTest {
+class QueueStackTest {
 
-    ArrStack<Integer> stack;
+    QueueStack<Integer> stack;
 
     @BeforeEach
     void setUp() {
-        stack = new ArrStack<>(5);
+        stack = new QueueStack<>(5);
     }
 
     private void init() {
@@ -23,6 +23,7 @@ class ArrStackTest {
 
     @Test
     void push() {
+
         stack.push(1);
         Assertions.assertThat(stack.top()).isEqualTo(1);
         stack.push(2);
@@ -33,39 +34,38 @@ class ArrStackTest {
         Assertions.assertThat(stack.top()).isEqualTo(4);
         stack.push(5);
         Assertions.assertThat(stack.top()).isEqualTo(5);
+
+        Assertions.assertThat(stack.isFull()).isTrue();
         Assertions.assertThatThrownBy(() -> stack.push(6)).isInstanceOf(StackFullException.class);
     }
 
     @Test
     void pop() {
         init();
-        Assertions.assertThat(stack.pop()).isEqualTo(5);
-        Assertions.assertThat(stack.top()).isEqualTo(4);
 
-        Assertions.assertThat(stack.pop()).isEqualTo(4);
-        Assertions.assertThat(stack.top()).isEqualTo(3);
-
-        Assertions.assertThat(stack.pop()).isEqualTo(3);
-        Assertions.assertThat(stack.top()).isEqualTo(2);
-
-        Assertions.assertThat(stack.pop()).isEqualTo(2);
-        Assertions.assertThat(stack.top()).isEqualTo(1);
-
-        Assertions.assertThat(stack.pop()).isEqualTo(1);
-        Assertions.assertThatThrownBy(() -> stack.top()).isInstanceOf(StackEmptyException.class);
-        Assertions.assertThatThrownBy(() -> stack.pop()).isInstanceOf(StackEmptyException.class);
-    }
-
-    @Test
-    void peek() {
-        init();
         Assertions.assertThat(stack.top()).isEqualTo(5);
+        Assertions.assertThat(stack.pop()).isEqualTo(5);
+
+        Assertions.assertThat(stack.top()).isEqualTo(4);
+        Assertions.assertThat(stack.pop()).isEqualTo(4);
+
+        Assertions.assertThat(stack.top()).isEqualTo(3);
+        Assertions.assertThat(stack.pop()).isEqualTo(3);
+
+        Assertions.assertThat(stack.top()).isEqualTo(2);
+        Assertions.assertThat(stack.pop()).isEqualTo(2);
+
+        Assertions.assertThat(stack.top()).isEqualTo(1);
+        Assertions.assertThat(stack.pop()).isEqualTo(1);
+
+        Assertions.assertThat(stack.isEmpty()).isTrue();
+        Assertions.assertThatThrownBy(() -> stack.pop()).isInstanceOf(StackEmptyException.class);
     }
 
     @Test
     void clear() {
         init();
         stack.clear();
-        Assertions.assertThatThrownBy(() -> stack.pop()).isInstanceOf(StackEmptyException.class);
+        Assertions.assertThat(stack.isEmpty()).isTrue();
     }
 }

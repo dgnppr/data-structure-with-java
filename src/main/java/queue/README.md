@@ -1,4 +1,6 @@
 Queue
 ---
 
-### 1. [Array Queue](./ArrQueue.java)
+### 1. [Array Queue](./ArrayQueue.java)
+
+### 1. [Stack Queue](./StackQueue.java)

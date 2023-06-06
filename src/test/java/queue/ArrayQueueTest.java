@@ -4,13 +4,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ArrQueueTest {
+class ArrayQueueTest {
 
-    ArrQueue<Integer> queue;
+    ArrayQueue<Integer> queue;
 
     @BeforeEach
     void setUp() {
-        queue = new ArrQueue<>(5);
+        queue = new ArrayQueue<>(5);
     }
 
     private void init() {

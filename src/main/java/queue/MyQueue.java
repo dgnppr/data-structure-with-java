@@ -10,6 +10,8 @@ public interface MyQueue<E> {
 
     E rear();
 
+    int size();
+
     boolean isEmpty();
 
     boolean isFull();

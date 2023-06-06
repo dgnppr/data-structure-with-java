@@ -6,8 +6,8 @@ public class StackQueue<E> implements MyQueue<E> {
 
     private final ArrayStack<E> in;
     private final ArrayStack<E> out;
-    private int size;
     private final int capacity;
+    private int size;
 
     public StackQueue(int capacity) {
         this.in = new ArrayStack<>(capacity);
@@ -61,14 +61,18 @@ public class StackQueue<E> implements MyQueue<E> {
     }
 
     private void moveInToOut() {
-        while (!this.in.isEmpty()) {
-            this.out.push(this.in.pop());
+        if (this.out.isEmpty()) {
+            while (!this.in.isEmpty()) {
+                this.out.push(this.in.pop());
+            }
         }
     }
 
     private void moveOutToIn() {
-        while (!this.out.isEmpty()) {
-            this.in.push(this.out.pop());
+        if (this.in.isEmpty()) {
+            while (!this.out.isEmpty()) {
+                this.in.push(this.out.pop());
+            }
         }
     }
 }

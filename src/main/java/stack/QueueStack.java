@@ -1,48 +1,55 @@
 package stack;
 
-import queue.ArrayQueue;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class QueueStack<E> implements MyStack<E> {
 
-    private final ArrayQueue<E> queue;
+    private final Deque<E> queue;
+    private final int capacity;
+    private int size;
 
     public QueueStack(int capacity) {
-        this.queue = new ArrayQueue<>(capacity);
+        this.capacity = capacity;
+        this.queue = new ArrayDeque<>();
+        this.size = 0;
     }
 
     @Override
     public void push(E data) {
         if (isFull()) throw new StackFullException();
-        queue.enqueue(data);
+        queue.push(data);
         int size = queue.size();
         for (int i = 0; i < size - 1; i++) {
-            queue.enqueue(queue.dequeue());
+            queue.push(queue.pollFirst());
         }
+        this.size++;
     }
 
     @Override
     public E pop() {
         if (isEmpty()) throw new StackEmptyException();
-        return queue.dequeue();
+        this.size--;
+        return queue.pollFirst();
     }
 
     @Override
     public E top() {
         if (isEmpty()) throw new StackEmptyException();
-        return queue.front();
+        return queue.peek();
     }
 
     @Override
     public void clear() {
         int size = queue.size();
         while (size-- > 0) {
-            queue.dequeue();
+            queue.pop();
         }
     }
 
     @Override
     public boolean isFull() {
-        return queue.isFull();
+        return this.size >= this.capacity;
     }
 
     @Override

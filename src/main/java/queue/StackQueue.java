@@ -1,17 +1,17 @@
 package queue;
 
-import stack.ArrayStack;
+import java.util.Stack;
 
 public class StackQueue<E> implements MyQueue<E> {
 
-    private final ArrayStack<E> in;
-    private final ArrayStack<E> out;
+    private final Stack<E> in;
+    private final Stack<E> out;
     private final int capacity;
     private int size;
 
     public StackQueue(int capacity) {
-        this.in = new ArrayStack<>(capacity);
-        this.out = new ArrayStack<>(capacity);
+        this.in = new Stack<>();
+        this.out = new Stack<>();
         this.capacity = capacity;
         this.size = 0;
     }
@@ -35,14 +35,14 @@ public class StackQueue<E> implements MyQueue<E> {
     public E front() {
         if (isEmpty()) throw new QueueEmptyException();
         moveInToOut();
-        return out.top();
+        return out.peek();
     }
 
     @Override
     public E rear() {
         if (isEmpty()) throw new QueueEmptyException();
         moveOutToIn();
-        return in.top();
+        return in.peek();
     }
 
     @Override

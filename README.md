@@ -3,6 +3,6 @@
 ---
 
 - ### [LinkedList](./src/main/java/linkedlist/README.md)
-- ### [Stack]()
-- ### [Queue]()
+- ### [Stack](./src/main/java/stack/README.md)
+- ### [Queue](./src/main/java/queue/README.md)
 

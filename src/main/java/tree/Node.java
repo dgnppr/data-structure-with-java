@@ -17,5 +17,8 @@ public class Node<K, V> {
         this.right = right;
     }
 
-
+    @Override
+    public String toString() {
+        return "[Key] " + this.key + "      " + "[Value] " + this.value;
+    }
 }

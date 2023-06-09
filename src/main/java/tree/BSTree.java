@@ -1,6 +1,9 @@
 package tree;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Stack;
 
 public class BSTree<K, V> {
 
@@ -30,7 +33,7 @@ public class BSTree<K, V> {
     }
 
     public void add(K key, V value) {
-        if (this.root == null) {
+        if (isEmpty()) {
             this.root = new Node<>(key, value, null, null);
         } else {
             Node<K, V> ptr = this.root;
@@ -115,30 +118,133 @@ public class BSTree<K, V> {
         return true;
     }
 
-    public void preOrderTraversal(Node node) {
-        if (node == null) return;
-        System.out.println(node);
-        preOrderTraversal(node.left);
-        preOrderTraversal(node.right);
+    public List<K> preOrderTraversal() {
+        if (isEmpty()) return null;
+
+        Node<K, V> ptr = this.root;
+        Stack<Node<K, V>> stack = new Stack<>();
+        List<K> rst = new ArrayList<>();
+
+        while (ptr != null || !stack.isEmpty()) {
+            while (ptr != null) {
+                rst.add(ptr.key);
+                stack.push(ptr);
+                ptr = ptr.left;
+            }
+
+            ptr = stack.pop();
+            ptr = ptr.right;
+        }
+
+        return rst;
+    }
+
+    public List<K> inOrderTraversal() {
+        if (isEmpty()) return null;
+
+        Node<K, V> ptr = this.root;
+        Stack<Node<K, V>> stack = new Stack<>();
+        List<K> rst = new ArrayList<>();
+
+        while (ptr != null || !stack.isEmpty()) {
+            while (ptr != null) {
+                stack.push(ptr);
+                ptr = ptr.left;
+            }
+
+            ptr = stack.pop();
+            rst.add(ptr.key);
+            ptr = ptr.right;
+
+        }
+        return rst;
+    }
+
+    public List<K> postOrderTraversal() {
+        if (isEmpty()) return null;
+
+        Node<K, V> ptr = this.root;
+        Node<K, V> prev = null;
+        Stack<Node<K, V>> stack = new Stack<>();
+        List<K> rst = new ArrayList<>();
+
+        while (ptr != null || !stack.isEmpty()) {
+            while (ptr != null) {
+                stack.push(ptr);
+                ptr = ptr.left;
+            }
+
+            ptr = stack.peek();
+
+            if (ptr.right == null || ptr.right == prev) {
+                ptr = stack.pop();
+                rst.add(ptr.key);
+                prev = ptr;
+                ptr = null;
+            } else {
+                ptr = ptr.right;
+            }
+        }
+
+        return rst;
+    }
+
+    public K getMinKey() {
+        if (isEmpty()) return null;
+
+        Node<K, V> ptr = this.root;
+
+        while (ptr.left != null) {
+            ptr = ptr.left;
+        }
+
+        return ptr.key;
+    }
+
+    public V getValueWithMinKey() {
+        if (isEmpty()) return null;
+
+        Node<K, V> ptr = this.root;
+
+        while (ptr.left != null) {
+            ptr = ptr.left;
+        }
+
+        return ptr.value;
+    }
+
+    public K getMaxKey() {
+        if (isEmpty()) return null;
+
+        Node<K, V> ptr = this.root;
+
+        while (ptr.right != null) {
+            ptr = ptr.right;
+        }
+
+        return ptr.key;
 
     }
 
-    public void postOrderTraversal(Node node) {
-        if (node == null) return;
-        postOrderTraversal(node.left);
-        postOrderTraversal(node.right);
-        System.out.println(node);
+    public V getValueWithMaxKey() {
+        if (isEmpty()) return null;
+
+        Node<K, V> ptr = this.root;
+
+        while (ptr.right != null) {
+            ptr = ptr.right;
+        }
+
+        return ptr.value;
+
     }
 
-    public void inOrderTraversal(Node node) {
-        if (node == null) return;
-        inOrderTraversal(node.left);
-        System.out.println(node);
-        inOrderTraversal(node.right);
+    public Node<K, V> getRoot() {
+        return isEmpty() ? null : this.root;
     }
 
-    public Node getRoot() {
-        return this.root == null ? null : this.root;
+    private boolean isEmpty() {
+        return this.root == null;
     }
 
     private int compare(K k1, K k2) {

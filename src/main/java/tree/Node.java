@@ -1,8 +1,5 @@
 package tree;
 
-import lombok.Getter;
-
-@Getter
 public class Node<K, V> {
 
     public K key;

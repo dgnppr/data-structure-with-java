@@ -1,4 +1,4 @@
-package tree;
+package bst;
 
 public class Node<K, V> {
 

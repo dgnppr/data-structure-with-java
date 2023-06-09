@@ -1,4 +1,4 @@
-package tree;
+package bst;
 
 import java.util.ArrayList;
 import java.util.Comparator;

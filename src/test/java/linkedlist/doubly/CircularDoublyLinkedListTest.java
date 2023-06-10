@@ -4,17 +4,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Comparator;
-import java.util.List;
-
 class CircularDoublyLinkedListTest {
     CircularDoublyLinkedList<Integer> linkedList;
-    Comparator<Integer> c = new Comparator<>() {
-        @Override
-        public int compare(Integer o1, Integer o2) {
-            return o1 - o2;
-        }
-    };
 
     @BeforeEach
     void setUp() {
@@ -109,14 +100,14 @@ class CircularDoublyLinkedListTest {
         linkedList.remove(8);
         linkedList.remove(0);
 
-        List<Integer> integers = linkedList.getAll();
-        Assertions.assertThat(integers).containsSequence(2, 3, 4, 5, 6, 7, 8);
-        Assertions.assertThat(integers).containsOnly(2, 3, 4, 5, 6, 7, 8);
+        Assertions.assertThat(linkedList.getAll()).containsSequence(2, 3, 4, 5, 6, 7, 8);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(2, 3, 4, 5, 6, 7, 8);
     }
 
     @Test
     void getAt() {
         init();
+
         Assertions.assertThat(linkedList.getAt(0)).isEqualTo(1);
         Assertions.assertThat(linkedList.getAt(9)).isEqualTo(10);
     }
@@ -124,19 +115,22 @@ class CircularDoublyLinkedListTest {
     @Test
     void contains() {
         init();
-        Assertions.assertThat(linkedList.contains(0, c)).isFalse();
-        Assertions.assertThat(linkedList.contains(1, c)).isTrue();
+
+        Assertions.assertThat(linkedList.contains(0, Integer::compareTo)).isFalse();
+        Assertions.assertThat(linkedList.contains(1, Integer::compareTo)).isTrue();
     }
 
     @Test
     void getMiddle() {
         init();
+
         Assertions.assertThat(linkedList.getMiddle()).isEqualTo(6);
     }
 
     @Test
     void removeIfDataIsEven() {
         init();
+
         linkedList.removeIfDataIsEven();
 
         Assertions.assertThat(linkedList.getAll()).containsSequence(1, 3, 5, 7, 9);
@@ -145,6 +139,7 @@ class CircularDoublyLinkedListTest {
     @Test
     void reverse() {
         init();
+
         linkedList.reverse();
 
         Assertions.assertThat(linkedList.getAll()).containsSequence(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
@@ -178,9 +173,9 @@ class CircularDoublyLinkedListTest {
     @Test
     void clear() {
         init();
+
         linkedList.clear();
 
-        List<Integer> integers = linkedList.getAll();
-        Assertions.assertThat(integers).isEmpty();
+        Assertions.assertThat(linkedList.getAll()).isEmpty();
     }
 }

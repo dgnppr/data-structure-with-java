@@ -5,9 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Comparator;
-import java.util.List;
-
 class SinglyLinkedListTest {
 
     SinglyLinkedList<Integer, Node<Integer>, SinglyLinkedList> linkedList;
@@ -53,7 +50,6 @@ class SinglyLinkedListTest {
 
     @Test
     void addAtLast() {
-
         linkedList.addAtLast(1);
         linkedList.addAtLast(2);
         linkedList.addAtLast(3);
@@ -75,7 +71,6 @@ class SinglyLinkedListTest {
 
     @Test
     void addNodeAtFirst() {
-
         linkedList.addAtFirst(new Node<>(10));
         linkedList.addAtFirst(new Node<>(9));
         linkedList.addAtFirst(new Node<>(8));
@@ -96,7 +91,6 @@ class SinglyLinkedListTest {
 
     @Test
     void addNodeAtLast() {
-
         linkedList.addAtLast(new Node<>(1));
         linkedList.addAtLast(new Node<>(2));
         linkedList.addAtLast(new Node<>(3));
@@ -117,7 +111,6 @@ class SinglyLinkedListTest {
 
     @Test
     void addAt() {
-
         linkedList.addAtLast(new Node<>(1));
         linkedList.addAtLast(new Node<>(2));
         linkedList.addAtLast(new Node<>(3));
@@ -160,7 +153,6 @@ class SinglyLinkedListTest {
 
     @Test
     void removeFirst() {
-
         init();
 
         linkedList.removeFirst();
@@ -175,7 +167,6 @@ class SinglyLinkedListTest {
     @Test
     @DisplayName("단일 노드로 이루어진 연결리스트 맨 앞 노드 삭제")
     void removeFirstInSingleNodeList() {
-
         linkedList.addAtFirst(1);
 
         linkedList.removeFirst();
@@ -189,7 +180,6 @@ class SinglyLinkedListTest {
     @Test
     @DisplayName("2개 노드로 이루어진 연결리스트 맨 앞 노드 삭제")
     void removeFirstInTwoNodeList() {
-
         linkedList.addAtLast(1);
         linkedList.addAtLast(2);
 
@@ -229,7 +219,6 @@ class SinglyLinkedListTest {
     @Test
     @DisplayName("2개 노드 연결리스트 맨 뒤 노드 삭제")
     void removeLastInTwoNodeList() {
-
         linkedList.addAtLast(1);
         linkedList.addAtLast(2);
 
@@ -257,7 +246,6 @@ class SinglyLinkedListTest {
 
     @Test
     void removeMiddle() {
-
         init();
 
         linkedList.removeMiddle();
@@ -320,10 +308,8 @@ class SinglyLinkedListTest {
 
         linkedList.remove(tail);
 
-        List<Integer> integers = linkedList.getAll();
-
-        Assertions.assertThat(integers).containsSequence(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        Assertions.assertThat(integers).containsOnly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).containsSequence(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(10);
@@ -334,7 +320,6 @@ class SinglyLinkedListTest {
         init();
 
         linkedList.removeIfDataIsEven();
-        List<Integer> integers = linkedList.getAll();
 
         Assertions.assertThat(linkedList.getAll()).containsSequence(1, 3, 5, 7, 9);
         Assertions.assertThat(linkedList.getAll()).containsOnly(1, 3, 5, 7, 9);
@@ -357,20 +342,14 @@ class SinglyLinkedListTest {
     void contains() {
         init();
 
-        Comparator<Integer> c = new Comparator<>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o1 - o2;
-            }
-        };
-
-        Assertions.assertThat(linkedList.contains(5, c)).isTrue();
-        Assertions.assertThat(linkedList.contains(20, c)).isFalse();
+        Assertions.assertThat(linkedList.contains(5, Integer::compareTo)).isTrue();
+        Assertions.assertThat(linkedList.contains(20, Integer::compareTo)).isFalse();
     }
 
     @Test
     void getAt() {
         init();
+
         Assertions.assertThat(linkedList.getAt(0)).isEqualTo(1);
         Assertions.assertThat(linkedList.getAt(5)).isEqualTo(6);
     }
@@ -378,6 +357,7 @@ class SinglyLinkedListTest {
     @Test
     void getAtFromBack() {
         init();
+
         Assertions.assertThat(linkedList.getAtFromBack(0)).isEqualTo(10);
         Assertions.assertThat(linkedList.getAtFromBack(1)).isEqualTo(9);
     }
@@ -385,6 +365,7 @@ class SinglyLinkedListTest {
     @Test
     void getMiddle() {
         init();
+
         Assertions.assertThat(linkedList.getMiddle()).isEqualTo(6);
     }
 
@@ -435,6 +416,7 @@ class SinglyLinkedListTest {
     @Test
     void reverse() {
         init();
+
         linkedList.reverse();
 
         Assertions.assertThat(linkedList.getAll()).containsSequence(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
@@ -442,10 +424,6 @@ class SinglyLinkedListTest {
         Assertions.assertThat(linkedList.getHead()).isEqualTo(10);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(1);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(10);
-    }
-
-    @Test
-    void purge() {
     }
 
     @Test
@@ -475,11 +453,6 @@ class SinglyLinkedListTest {
         linkedList.addAtLast(2);
         linkedList.addAtLast(1);
 
-        Assertions.assertThat(linkedList.isPalindrome(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o1 - o2;
-            }
-        })).isTrue();
+        Assertions.assertThat(linkedList.isPalindrome(Integer::compareTo)).isTrue();
     }
 }

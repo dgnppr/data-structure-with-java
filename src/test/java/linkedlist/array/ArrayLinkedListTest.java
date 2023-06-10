@@ -4,18 +4,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Comparator;
-import java.util.List;
-
 class ArrayLinkedListTest {
 
     ArrayLinkedList<Integer> linkedList;
-    Comparator<Integer> c = new Comparator<>() {
-        @Override
-        public int compare(Integer o1, Integer o2) {
-            return o1 - o2;
-        }
-    };
 
     @BeforeEach
     void setUp() {
@@ -107,7 +98,7 @@ class ArrayLinkedListTest {
 
         linkedList.removeLast();
 
-        Assertions.assertThat(linkedList.contains(1, c)).isFalse();
+        Assertions.assertThat(linkedList.contains(1, Integer::compareTo)).isFalse();
         Assertions.assertThat(linkedList.getAll()).isEmpty();
     }
 
@@ -117,7 +108,7 @@ class ArrayLinkedListTest {
 
         linkedList.removeMiddle();
 
-        Assertions.assertThat(linkedList.contains(6, c)).isFalse();
+        Assertions.assertThat(linkedList.contains(6, Integer::compareTo)).isFalse();
         Assertions.assertThat(linkedList.getAll()).containsSequence(1, 2, 3, 4, 5, 7, 8, 9, 10);
         Assertions.assertThat(linkedList.getAll()).containsOnly(1, 2, 3, 4, 5, 7, 8, 9, 10);
     }
@@ -127,7 +118,7 @@ class ArrayLinkedListTest {
         init();
         linkedList.removeAt(3);
 
-        Assertions.assertThat(linkedList.contains(4, c)).isFalse();
+        Assertions.assertThat(linkedList.contains(4, Integer::compareTo)).isFalse();
         Assertions.assertThat(linkedList.getAll()).containsSequence(1, 2, 3, 5, 6, 7, 8, 9, 10);
         Assertions.assertThat(linkedList.getAll()).containsOnly(1, 2, 3, 5, 6, 7, 8, 9, 10);
     }
@@ -145,9 +136,10 @@ class ArrayLinkedListTest {
     @Test
     void clear() {
         init();
+
         linkedList.clear();
-        List<Integer> integers = linkedList.getAll();
-        Assertions.assertThat(integers).hasSize(0);
+
+        Assertions.assertThat(linkedList.getAll()).isEmpty();
     }
 
     @Test
@@ -159,6 +151,7 @@ class ArrayLinkedListTest {
     @Test
     void getAtFromBack() {
         init();
+
         Assertions.assertThat(linkedList.getAtFromBack(0)).isEqualTo(10);
         Assertions.assertThat(linkedList.getAtFromBack(5)).isEqualTo(5);
         Assertions.assertThat(linkedList.getAtFromBack(9)).isEqualTo(1);
@@ -167,6 +160,7 @@ class ArrayLinkedListTest {
     @Test
     void getMiddle() {
         init();
+
         Assertions.assertThat(linkedList.getMiddle()).isEqualTo(6);
     }
 
@@ -211,9 +205,9 @@ class ArrayLinkedListTest {
         linkedList.addAtLast(3);
         linkedList.addAtLast(2);
         linkedList.addAtLast(1);
-        Assertions.assertThat(linkedList.isPalindrome(c)).isTrue();
+        Assertions.assertThat(linkedList.isPalindrome(Integer::compareTo)).isTrue();
 
         linkedList.addAtLast(1);
-        Assertions.assertThat(linkedList.isPalindrome(c)).isFalse();
+        Assertions.assertThat(linkedList.isPalindrome(Integer::compareTo)).isFalse();
     }
 }

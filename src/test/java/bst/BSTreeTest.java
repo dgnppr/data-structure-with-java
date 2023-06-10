@@ -4,21 +4,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Comparator;
-
 class BSTreeTest {
 
     BSTree<String, Integer> tree;
-    Comparator<String> comparator = new Comparator<>() {
-        @Override
-        public int compare(String o1, String o2) {
-            return o1.compareTo(o2);
-        }
-    };
 
     @BeforeEach
     void setUp() {
-        tree = new BSTree<>(comparator);
+        tree = new BSTree<>(String::compareTo);
     }
 
     private void init() {

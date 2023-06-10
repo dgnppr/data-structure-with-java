@@ -44,11 +44,8 @@ class SinglyLinkedListTest {
         linkedList.addAtFirst(2);
         linkedList.addAtFirst(1);
 
-        List<Integer> integers = linkedList.getAll();
-        for (int i = 0; i < integers.size(); i++) {
-            Assertions.assertThat(integers.get(i)).isEqualTo(i + 1);
-        }
-
+        Assertions.assertThat(linkedList.getAll()).containsSequence(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(10);
@@ -68,11 +65,9 @@ class SinglyLinkedListTest {
         linkedList.addAtLast(9);
         linkedList.addAtLast(10);
 
-        List<Integer> integers = linkedList.getAll();
-        for (int i = 0; i < integers.size(); i++) {
-            Assertions.assertThat(integers.get(i)).isEqualTo(i + 1);
-        }
 
+        Assertions.assertThat(linkedList.getAll()).containsSequence(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(10);
@@ -92,11 +87,8 @@ class SinglyLinkedListTest {
         linkedList.addAtFirst(new Node<>(2));
         linkedList.addAtFirst(new Node<>(1));
 
-        List<Integer> integers = linkedList.getAll();
-        for (int i = 0; i < integers.size(); i++) {
-            Assertions.assertThat(integers.get(i)).isEqualTo(i + 1);
-        }
-
+        Assertions.assertThat(linkedList.getAll()).containsSequence(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(10);
@@ -116,11 +108,8 @@ class SinglyLinkedListTest {
         linkedList.addAtLast(new Node<>(9));
         linkedList.addAtLast(new Node<>(10));
 
-        List<Integer> integers = linkedList.getAll();
-        for (int i = 0; i < integers.size(); i++) {
-            Assertions.assertThat(integers.get(i)).isEqualTo(i + 1);
-        }
-
+        Assertions.assertThat(linkedList.getAll()).containsSequence(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(10);
@@ -141,11 +130,8 @@ class SinglyLinkedListTest {
 
         linkedList.addAt(4, 5);
 
-        List<Integer> integers = linkedList.getAll();
-        for (int i = 0; i < integers.size(); i++) {
-            Assertions.assertThat(integers.get(i)).isEqualTo(i + 1);
-        }
-
+        Assertions.assertThat(linkedList.getAll()).containsSequence(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(10);
@@ -165,11 +151,8 @@ class SinglyLinkedListTest {
 
         linkedList.addAt(4, new Node<>(5));
 
-        List<Integer> integers = linkedList.getAll();
-        for (int i = 0; i < integers.size(); i++) {
-            Assertions.assertThat(integers.get(i)).isEqualTo(i + 1);
-        }
-
+        Assertions.assertThat(linkedList.getAll()).containsSequence(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(10);
@@ -182,11 +165,8 @@ class SinglyLinkedListTest {
 
         linkedList.removeFirst();
 
-        List<Integer> integers = linkedList.getAll();
-        for (int i = 0; i < integers.size(); i++) {
-            Assertions.assertThat(integers.get(i)).isEqualTo(i + 2);
-        }
-
+        Assertions.assertThat(linkedList.getAll()).containsSequence(2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(2, 3, 4, 5, 6, 7, 8, 9, 10);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(2);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(9);
@@ -200,8 +180,7 @@ class SinglyLinkedListTest {
 
         linkedList.removeFirst();
 
-        List<Integer> integers = linkedList.getAll();
-        Assertions.assertThat(integers).isEmpty();
+        Assertions.assertThat(linkedList.getAll()).isEmpty();
         Assertions.assertThat(linkedList.getHead()).isNull();
         Assertions.assertThat(linkedList.getTail()).isNull();
         Assertions.assertThat(linkedList.getSize()).isEqualTo(0);
@@ -216,9 +195,7 @@ class SinglyLinkedListTest {
 
         linkedList.removeFirst();
 
-        List<Integer> integers = linkedList.getAll();
-        Assertions.assertThat(integers).hasSize(1);
-        Assertions.assertThat(integers.get(0)).isEqualTo(2);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(2);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(2);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(2);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(1);
@@ -229,8 +206,7 @@ class SinglyLinkedListTest {
         linkedList.addAtLast(1);
         linkedList.removeLast();
 
-        List<Integer> integers = linkedList.getAll();
-        Assertions.assertThat(integers).isEmpty();
+        Assertions.assertThat(linkedList.getAll()).isEmpty();
         Assertions.assertThat(linkedList.getHead()).isNull();
         Assertions.assertThat(linkedList.getTail()).isNull();
         Assertions.assertThat(linkedList.getSize()).isZero();
@@ -242,9 +218,8 @@ class SinglyLinkedListTest {
         linkedList.addAtFirst(1);
 
         linkedList.removeLast();
-        List<Integer> integers = linkedList.getAll();
 
-        Assertions.assertThat(integers).isEmpty();
+        Assertions.assertThat(linkedList.getAll()).isEmpty();
         Assertions.assertThat(linkedList.getHead()).isNull();
         Assertions.assertThat(linkedList.getTail()).isNull();
         Assertions.assertThat(linkedList.getSize()).isZero();
@@ -260,9 +235,7 @@ class SinglyLinkedListTest {
 
         linkedList.removeLast();
 
-        List<Integer> integers = linkedList.getAll();
-
-        Assertions.assertThat(integers).hasSize(1);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(1);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(1);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(1);
@@ -274,9 +247,9 @@ class SinglyLinkedListTest {
 
         linkedList.removeAt(7);
 
-        List<Integer> integers = linkedList.getAll();
-        Assertions.assertThat(integers).hasSize(9);
-        Assertions.assertThat(integers).doesNotContain(8);
+        Assertions.assertThat(linkedList.getAll()).containsSequence(1, 2, 3, 4, 5, 6, 7, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(1, 2, 3, 4, 5, 6, 7, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).doesNotContain(8);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(9);
@@ -289,9 +262,9 @@ class SinglyLinkedListTest {
 
         linkedList.removeMiddle();
 
-        List<Integer> integers = linkedList.getAll();
-        Assertions.assertThat(integers).hasSize(9);
-        Assertions.assertThat(integers).doesNotContain(6);
+        Assertions.assertThat(linkedList.getAll()).containsSequence(1, 2, 3, 4, 5, 7, 8, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(1, 2, 3, 4, 5, 7, 8, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).doesNotContain(6);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(9);
@@ -315,9 +288,9 @@ class SinglyLinkedListTest {
 
         linkedList.remove(target);
 
-        List<Integer> integers = linkedList.getAll();
-        Assertions.assertThat(integers).hasSize(9);
-        Assertions.assertThat(integers).doesNotContain(7);
+        Assertions.assertThat(linkedList.getAll()).containsSequence(1, 2, 3, 4, 5, 6, 8, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(1, 2, 3, 4, 5, 6, 8, 9, 10);
+        Assertions.assertThat(linkedList.getAll()).doesNotContain(7);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(9);
@@ -331,8 +304,7 @@ class SinglyLinkedListTest {
 
         linkedList.remove(head);
 
-        List<Integer> integers = linkedList.getAll();
-        Assertions.assertThat(integers).isEmpty();
+        Assertions.assertThat(linkedList.getAll()).isEmpty();
         Assertions.assertThat(linkedList.getHead()).isNull();
         Assertions.assertThat(linkedList.getTail()).isNull();
         Assertions.assertThat(linkedList.getSize()).isZero();
@@ -342,14 +314,16 @@ class SinglyLinkedListTest {
     void removeTail() {
 
         init();
+
         Node<Integer> tail = new Node<>(11);
         linkedList.addAtLast(tail);
 
         linkedList.remove(tail);
 
         List<Integer> integers = linkedList.getAll();
-        Assertions.assertThat(integers).hasSize(10);
-        Assertions.assertThat(integers).doesNotContain(11);
+
+        Assertions.assertThat(integers).containsSequence(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Assertions.assertThat(integers).containsOnly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(10);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(10);
@@ -362,8 +336,8 @@ class SinglyLinkedListTest {
         linkedList.removeIfDataIsEven();
         List<Integer> integers = linkedList.getAll();
 
-        integers.stream().forEach(i -> Assertions.assertThat(i % 2 != 0).isTrue());
-        Assertions.assertThat(integers).hasSize(5);
+        Assertions.assertThat(linkedList.getAll()).containsSequence(1, 3, 5, 7, 9);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(1, 3, 5, 7, 9);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(9);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(5);
@@ -376,8 +350,7 @@ class SinglyLinkedListTest {
 
         linkedList.clear();
 
-        List<Integer> integers = linkedList.getAll();
-        Assertions.assertThat(integers).isEmpty();
+        Assertions.assertThat(linkedList.getAll()).isEmpty();
     }
 
     @Test
@@ -464,11 +437,8 @@ class SinglyLinkedListTest {
         init();
         linkedList.reverse();
 
-        List<Integer> integers = linkedList.getAll();
-        for (int i = 0; i < integers.size(); i++) {
-            Assertions.assertThat(integers.get(i)).isEqualTo(10 - i);
-        }
-
+        Assertions.assertThat(linkedList.getAll()).containsSequence(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(10);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(1);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(10);
@@ -489,6 +459,8 @@ class SinglyLinkedListTest {
 
         linkedList.deduplicate();
 
+        Assertions.assertThat(linkedList.getAll()).containsSequence(1, 2, 3);
+        Assertions.assertThat(linkedList.getAll()).containsOnly(1, 2, 3);
         Assertions.assertThat(linkedList.getHead()).isEqualTo(1);
         Assertions.assertThat(linkedList.getTail()).isEqualTo(3);
         Assertions.assertThat(linkedList.getSize()).isEqualTo(3);
@@ -509,9 +481,5 @@ class SinglyLinkedListTest {
                 return o1 - o2;
             }
         })).isTrue();
-    }
-
-    @Test
-    void sum() {
     }
 }

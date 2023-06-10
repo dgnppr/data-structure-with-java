@@ -228,18 +228,16 @@ public class DoublyLinkedList<E, K extends BiNode<E>, L extends DoublyLinkedList
             removeLast();
         } else {
             BiNode<E> cur = head;
-            BiNode<E> pre = head;
 
             while (cur.nxt != p) {
-                pre = cur;
                 cur = cur.nxt;
                 if (cur == null) {
                     return;
                 }
             }
 
-            pre.nxt = cur.nxt;
-            cur.prev = pre;
+            cur.nxt = cur.nxt.nxt;
+            cur.nxt.prev = cur;
             size--;
         }
     }

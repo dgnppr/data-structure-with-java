@@ -15,21 +15,22 @@ public class MinArrayStack<E> extends ArrayStack<E> {
 
     @Override
     public void push(E data) {
+        if (super.isFull()) throw new StackFullException();
+
         if (super.isEmpty()) {
             this.minIdx = this.ptr;
-        } else {
-            if (comparator.compare(data, (E) this.stk[this.minIdx]) < 0) {
-                this.minIdx = this.ptr;
-            }
+        } else if (comparator.compare(data, (E) this.stk[this.minIdx]) < 0) {
+            this.minIdx = this.ptr;
         }
+
         super.push(data);
     }
 
     @Override
     public E pop() {
         if (super.isEmpty()) throw new StackEmptyException();
-        if (this.ptr - 1 == this.minIdx) {
-            if (this.ptr - 1 == 0)
+        if (this.ptr - 1 == this.minIdx) { // 삭제하는 데이터가 최소값이면 최소값 갱신
+            if (this.ptr - 1 == 0) // 노드가 한개 있으면
                 this.minIdx = -1;
             else
                 this.minIdx = searchNxtMinIdx();
@@ -44,10 +45,6 @@ public class MinArrayStack<E> extends ArrayStack<E> {
     }
 
     private int searchNxtMinIdx() {
-        if (this.ptr - 1 <= 0) {
-            return 0;
-        }
-
         int cur = this.ptr - 2;
         int idx = cur;
         E min = (E) this.stk[cur];

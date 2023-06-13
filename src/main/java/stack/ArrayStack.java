@@ -2,9 +2,9 @@ package stack;
 
 public class ArrayStack<E> implements MyStack<E> {
 
-    private final int capacity;
-    private final Object[] stk;
-    private int ptr;
+    protected final int capacity;
+    protected final Object[] stk;
+    protected int ptr;
 
     public ArrayStack(int capacity) {
         this.capacity = capacity;

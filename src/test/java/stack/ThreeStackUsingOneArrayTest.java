@@ -4,13 +4,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ThreeStackWithOneArrayTest {
+class ThreeStackUsingOneArrayTest {
 
-    ThreeStackWithOneArray<Integer> stack;
+    ThreeStackUsingOneArray<Integer> stack;
 
     @BeforeEach
     void setUp() {
-        this.stack = new ThreeStackWithOneArray<>(15);
+        this.stack = new ThreeStackUsingOneArray<>(15);
     }
 
     private void init() {
@@ -67,5 +67,5 @@ class ThreeStackWithOneArrayTest {
         Assertions.assertThat(stack.topStack2()).isEqualTo(8);
         Assertions.assertThat(stack.topStack3()).isEqualTo(13);
     }
-    
+
 }

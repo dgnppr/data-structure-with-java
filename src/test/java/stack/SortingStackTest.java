@@ -39,6 +39,8 @@ class SortingStackTest {
         stack.push(4);
         stack.push(1);
 
+        Assertions.assertThat(stack.top()).isEqualTo(1);
+
         stack.pop();
         Assertions.assertThat(stack.top()).isEqualTo(3);
 

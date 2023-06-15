@@ -1,13 +1,13 @@
 package stack;
 
-public class ThreeStackWithOneArray<E> {
+public class ThreeStackUsingOneArray<E> {
 
     private Object[] arr;
     private int limit;
     private int stack1Ptr, stack2Ptr, stack3Ptr;
     private int stack1Limit, stack2Limit, stack3Limit;
 
-    public ThreeStackWithOneArray(int capacity) {
+    public ThreeStackUsingOneArray(int capacity) {
         if (capacity < 3) throw new RuntimeException("Invalid parameter");
         this.arr = new Object[capacity];
 

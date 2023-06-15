@@ -18,12 +18,8 @@ public class MinNodeStack<E> {
         } else {
             E min = this.top.min;
             MinNode<E> node;
-            if (comparator.compare(data, min) < 0) {
-                node = new MinNode<>(data, this.top, data);
-            } else {
-                node = new MinNode<>(data, this.top, min);
-            }
-
+            if (comparator.compare(data, min) < 0) node = new MinNode<>(data, this.top, data);
+            else node = new MinNode<>(data, this.top, min);
             this.top = node;
         }
     }

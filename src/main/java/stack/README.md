@@ -37,3 +37,10 @@ Stack
 #### [SetOfStack](./SetOfStack.java)
 
 - Set Of Stack which operates same as a single stack
+
+#### [StackConverter](./StackConverter.java)
+
+- impl stack that converts infix notation to prefix/suffix notation
+    - Infix notation ex = `1+2*3`
+    - Prefix notation ex = `*+123`
+    - Suffix notation ex = `123*+`

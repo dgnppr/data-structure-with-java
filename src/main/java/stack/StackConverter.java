@@ -9,9 +9,9 @@ public class StackConverter {
     private Set<Character> lowPriority = Set.of('+', '-');
     private Set<Character> highPriority = Set.of('*', '/');
 
-    public String covertToPrefixNotation(String infixNotation) {
+    public String covertToPrefixExpression(String infixExpr) {
         Stack<Character> stack = new Stack<>();
-        char[] charArray = infixNotation.toCharArray();
+        char[] charArray = infixExpr.toCharArray();
         StringBuilder ret = new StringBuilder();
 
         for (char ch : charArray) {
@@ -22,9 +22,9 @@ public class StackConverter {
         return ret.toString();
     }
 
-    public String covertToSuffixNotation(String infixNotation) {
+    public String covertToSuffixExpression(String infixExpr) {
         Stack<Character> stack = new Stack<>();
-        char[] charArray = infixNotation.toCharArray();
+        char[] charArray = infixExpr.toCharArray();
         StringBuilder ret = new StringBuilder();
 
         for (char ch : charArray) {

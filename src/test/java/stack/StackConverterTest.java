@@ -19,9 +19,9 @@ class StackConverterTest {
 
     @Test
     void covertToSuffixExpression() {
-        Assertions.assertThat(stackConverter.covertToSuffixNotation("1*(2+3)")).isEqualTo("123+*");
-        Assertions.assertThat(stackConverter.covertToSuffixNotation("1+2*3")).isEqualTo("123*+");
-        Assertions.assertThat(stackConverter.covertToSuffixNotation("1+2")).isEqualTo("12+");
-        Assertions.assertThat(stackConverter.covertToSuffixNotation("1+2*3-4/5")).isEqualTo("123*+45/-");
+        Assertions.assertThat(stackConverter.covertToSuffixExpression("1*(2+3)")).isEqualTo("123+*");
+        Assertions.assertThat(stackConverter.covertToSuffixExpression("1+2*3")).isEqualTo("123*+");
+        Assertions.assertThat(stackConverter.covertToSuffixExpression("1+2")).isEqualTo("12+");
+        Assertions.assertThat(stackConverter.covertToSuffixExpression("1+2*3-4/5")).isEqualTo("123*+45/-");
     }
 }

@@ -1,5 +1,6 @@
-Stack
----
+# Stack
+
+### 구현
 
 #### [Array Stack](./ArrayStack.java)
 
@@ -44,3 +45,19 @@ Stack
     - Infix notation ex = `1+2*3`
     - Prefix notation ex = `*+123`
     - Suffix notation ex = `123*+`
+
+```java
+public interface MyStack<E> {
+    void push(E data);
+
+    E pop();
+
+    E top();
+
+    void clear();
+
+    boolean isFull();
+
+    boolean isEmpty();
+}
+```

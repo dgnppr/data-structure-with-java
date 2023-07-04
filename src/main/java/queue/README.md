@@ -1,5 +1,6 @@
-Queue
----
+# Queue
+
+### 구현
 
 #### [Array Queue](./ArrayQueue.java)
 
@@ -16,3 +17,23 @@ Queue
 #### [Animal Queue](./AnimalQueue.java)
 
 - Basic Queue function + specific type dequeue
+
+```java
+public interface MyQueue<E> {
+
+    void enqueue(E data);
+
+    E dequeue();
+
+    E front();
+
+    E rear();
+
+    int size();
+
+    boolean isEmpty();
+
+    boolean isFull();
+}
+
+```
